@@ -1743,36 +1743,69 @@ button {
   background: var(--surface-white);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
-  padding: var(--space-8) var(--space-6);
   box-shadow: var(--shadow-subtle);
   display: flex;
   flex-direction: column;
   transition: all var(--transition-gentle);
+  overflow: hidden;
+  position: relative;
 }
 
 .service-card:hover {
   transform: translateY(-4px);
-  border-color: var(--brand-purple);
   box-shadow: var(--shadow-card-hover);
 }
 
+.service-card-img-wrap {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.service-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.service-card:hover .service-card-img {
+  transform: scale(1.05);
+}
+
 .service-header-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  background-color: var(--brand-purple-soft);
-  color: var(--brand-purple);
+  width: 48px;
+  height: 48px;
+  background-color: var(--surface-white);
+  color: var(--brand-red);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: var(--space-4);
+  position: absolute;
+  bottom: -24px;
+  right: 24px;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-top: 3px solid var(--brand-red);
+}
+
+.service-card-content {
+  padding: var(--space-8) var(--space-6) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background: var(--surface-white);
+  position: relative;
+  z-index: 1;
 }
 
 .service-card-title {
   font-size: 1.15rem;
   font-weight: 800;
-  color: var(--text-title);
-  margin-bottom: var(--space-2);
+  color: #0e1032;
+  margin-bottom: var(--space-3);
+  text-transform: capitalize;
 }
 
 .service-card-desc {
@@ -1781,6 +1814,30 @@ button {
   color: var(--text-muted);
   margin-bottom: var(--space-5);
   flex-grow: 1;
+}
+
+.service-btn-link {
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: #0e1032;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color var(--transition-fast);
+}
+
+.service-btn-link:hover {
+  color: var(--brand-red);
+}
+
+.service-btn-link svg {
+  transition: transform var(--transition-fast);
+}
+
+.service-btn-link:hover svg {
+  transform: translateX(4px);
 }
 
 /* ==========================================================================
