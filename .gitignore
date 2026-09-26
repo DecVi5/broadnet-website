@@ -1,0 +1,25 @@
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+
+# Node (if added later)
+node_modules/
+dist/
+
+# Misc
+*.log
+.vercel
