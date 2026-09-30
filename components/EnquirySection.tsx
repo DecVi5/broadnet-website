@@ -117,9 +117,6 @@ export default function EnquirySection() {
             Start Your{" "}
             <span className="text-gradient">Project</span>
           </h2>
-          <p className="text-[#16143E]/50 max-w-lg mx-auto">
-            Tell us what you need and our engineers will get back to you within 2 hours.
-          </p>
         </motion.div>
 
         <motion.div
