@@ -92,25 +92,19 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }
               }}
-              className="flex-shrink-0 cursor-pointer group"
+              className="flex-shrink-0 cursor-pointer group flex items-center"
               title="Click to replay BroadNet intro animation"
             >
               <Link href="/" onClick={(e) => { if (isHomePage) e.preventDefault(); }}>
-                <div
-                  className={`p-1.5 px-3 rounded-xl transition-all duration-300 flex items-center ${
-                    isDarkHero ? "bg-white/95 shadow-md shadow-black/25" : "bg-transparent"
-                  }`}
-                >
-                  <Image
-                    src="/assets/logo.png"
-                    alt="Broadnet"
-                    width={200}
-                    height={82}
-                    className="h-9 w-auto object-contain transition-transform group-hover:scale-105"
-                    priority
-                    loading="eager"
-                  />
-                </div>
+                <Image
+                  src="/assets/logo.png"
+                  alt="Broadnet"
+                  width={200}
+                  height={82}
+                  className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
+                  priority
+                  loading="eager"
+                />
               </Link>
             </div>
 
