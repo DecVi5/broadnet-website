@@ -66,8 +66,6 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
     }
   };
 
-  const isDarkHero = isHomePage && !scrolled;
-
   return (
     <>
       {/* ── Main header bar ── */}
@@ -75,9 +73,7 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
             ? "glass border-b border-[#16143E]/10 shadow-lg shadow-[#16143E]/5"
-            : isDarkHero
-            ? "bg-[#06091F]/75 backdrop-blur-md border-b border-white/10"
-            : "bg-white/95 border-b border-transparent"
+            : "bg-white/95 border-b border-[#16143E]/6"
         }`}
         style={{ overflow: "visible" }}
       >
@@ -119,11 +115,7 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link)}
                   className={`relative px-5 py-2 text-sm font-semibold tracking-wide transition-colors duration-200 rounded-full group ${
-                    isDarkHero
-                      ? activePage === link.label
-                        ? "text-[#00C2FF]"
-                        : "text-white/80 hover:text-white"
-                      : activePage === link.label
+                    activePage === link.label
                       ? "text-[#4E0DBA]"
                       : "text-[#16143E]/65 hover:text-[#16143E]"
                   }`}
@@ -131,9 +123,9 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
                 >
                   {link.label}
                   <span
-                    className={`absolute bottom-1.5 left-5 right-5 h-0.5 rounded-full transition-transform duration-200 origin-left ${
-                      isDarkHero ? "bg-[#00C2FF]" : "bg-[#4E0DBA]"
-                    } ${activePage === link.label ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"}`}
+                    className={`absolute bottom-1.5 left-5 right-5 h-0.5 rounded-full bg-[#4E0DBA] transition-transform duration-200 origin-left ${
+                      activePage === link.label ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    }`}
                   />
                 </Link>
               ))}
@@ -154,9 +146,7 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
             {/* Mobile burger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`md:hidden p-2 rounded-xl transition-colors ${
-                isDarkHero ? "text-white hover:bg-white/10" : "text-[#16143E] hover:bg-[#16143E]/5"
-              }`}
+              className="md:hidden p-2 rounded-xl text-[#16143E] hover:bg-[#16143E]/5"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
