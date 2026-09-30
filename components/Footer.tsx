@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, MapPin, Mail, ArrowUpRight } from "lucide-react";
+import { Phone, MapPin, Mail, ArrowUpRight, Navigation } from "lucide-react";
 
 const QUICK_LINKS = [
   { label: "Security Solutions", href: "/security" },
@@ -88,10 +88,23 @@ export default function Footer() {
             <h3 className="text-xs font-bold uppercase tracking-widest text-[#4E0DBA] mb-5">Contact</h3>
             <ul className="space-y-4">
               <li className="flex gap-3">
-                <MapPin size={15} className="text-[#4E0DBA] mt-0.5 flex-shrink-0" />
-                <span className="text-sm text-white/60 leading-relaxed">
-                  1093, Fire Station Road, TNHB,<br />Avadi, Chennai – 600 054
-                </span>
+                <MapPin size={15} className="text-[#4E0DBA] mt-1 flex-shrink-0" />
+                <div className="flex flex-col gap-2">
+                  <span className="text-sm text-white/60 leading-relaxed">
+                    1093, Fire Station Road, TNHB,<br />Avadi, Chennai – 600 054
+                  </span>
+                  <a
+                    href="https://www.google.com/maps/dir/?api=1&destination=1093,+Fire+Station+Road,+TNHB,+Avadi,+Chennai,+Tamil+Nadu+600054"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] hover:bg-[#4E0DBA]/25 border border-white/10 hover:border-[#4E0DBA]/50 text-xs font-semibold text-[#00C2FF] hover:text-white transition-all duration-200 w-fit group"
+                    title="Open office directions in Google Maps"
+                  >
+                    <Navigation size={12} className="text-[#00C2FF] group-hover:rotate-45 transition-transform" />
+                    <span>Get Directions</span>
+                    <ArrowUpRight size={11} className="opacity-70 group-hover:opacity-100" />
+                  </a>
+                </div>
               </li>
               <li className="flex gap-3">
                 <Phone size={15} className="text-[#4E0DBA] mt-0.5 flex-shrink-0" />

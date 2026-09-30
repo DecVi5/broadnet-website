@@ -15,6 +15,11 @@ const CONTACT_INFO = [
     title: "Visit Us",
     lines: ["1093, Fire Station Road", "TNHB, Avadi", "Chennai — 600 054"],
     color: "#4E0DBA",
+    links: [
+      "https://www.google.com/maps/dir/?api=1&destination=1093,+Fire+Station+Road,+TNHB,+Avadi,+Chennai,+Tamil+Nadu+600054",
+      "https://www.google.com/maps/dir/?api=1&destination=1093,+Fire+Station+Road,+TNHB,+Avadi,+Chennai,+Tamil+Nadu+600054",
+      "https://www.google.com/maps/dir/?api=1&destination=1093,+Fire+Station+Road,+TNHB,+Avadi,+Chennai,+Tamil+Nadu+600054",
+    ],
   },
   {
     icon: Phone,
