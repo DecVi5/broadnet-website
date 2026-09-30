@@ -81,17 +81,28 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
           <div className="flex items-center h-16 gap-4" style={{ overflow: "visible" }}>
 
             {/* Left: Logo */}
-            <Link href="/" className="flex-shrink-0">
-              <Image
-                src="/assets/logo.png"
-                alt="Broadnet"
-                width={200}
-                height={82}
-                className="h-11 w-auto object-contain"
-                priority
-                loading="eager"
-              />
-            </Link>
+            <div
+              onClick={() => {
+                if (isHomePage) {
+                  window.dispatchEvent(new CustomEvent("broadnet:replay-intro"));
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              }}
+              className="flex-shrink-0 cursor-pointer group"
+              title="Click to replay BroadNet intro animation"
+            >
+              <Link href="/" onClick={(e) => { if (isHomePage) e.preventDefault(); }}>
+                <Image
+                  src="/assets/logo.png"
+                  alt="Broadnet"
+                  width={200}
+                  height={82}
+                  className="h-11 w-auto object-contain transition-transform group-hover:scale-105"
+                  priority
+                  loading="eager"
+                />
+              </Link>
+            </div>
 
             {/* Spacer */}
             <div className="flex-1" />

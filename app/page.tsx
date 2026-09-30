@@ -6,10 +6,12 @@ import AdvantageSection from "@/components/AdvantageSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import EnquirySection from "@/components/EnquirySection";
 import Footer from "@/components/Footer";
+import CinematicIntro from "@/components/CinematicIntro";
 
 export default function HomePage() {
   return (
     <>
+      <CinematicIntro />
       <Header activePage="Home" />
       <main>
         <HeroSection />
