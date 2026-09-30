@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "revert:baseline": "git checkout master",
+    "apply:premium": "git checkout feature/premium-enhancements"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

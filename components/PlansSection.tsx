@@ -81,6 +81,7 @@ const COMPARISON_ROWS = [
 
 export default function PlansSection() {
   const [showTable, setShowTable] = useState(false);
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
   const [arrived, setArrived] = useState(false);
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
@@ -148,14 +149,70 @@ export default function PlansSection() {
           </h2>
           <p className="text-white/60 text-base md:text-lg leading-relaxed font-body">
             Whether you&apos;re browsing, streaming, working, studying or running a business,
-            choose a connection designed around your needs.
+            choose a connection designed around your needs with zero hidden fees.
           </p>
+
+          {/* Billing Cycle Toggle (Trick 3: Concrete Value & Trick 5: Cognitive Fluency) */}
+          <div className="flex items-center justify-center mt-8">
+            <div className="bg-[#110E28] border border-white/12 p-1.5 rounded-full flex items-center shadow-2xl">
+              <button
+                type="button"
+                onClick={() => setBillingCycle("monthly")}
+                className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-200 ${
+                  billingCycle === "monthly"
+                    ? "bg-[#4E0DBA] text-white shadow-md shadow-[#4E0DBA]/40"
+                    : "text-white/60 hover:text-white"
+                }`}
+              >
+                Monthly Billing
+              </button>
+              <button
+                type="button"
+                onClick={() => setBillingCycle("annual")}
+                className={`px-5 py-2 rounded-full text-xs font-bold transition-all duration-200 flex items-center gap-2 ${
+                  billingCycle === "annual"
+                    ? "bg-[#EF1313] text-white shadow-md shadow-[#EF1313]/40"
+                    : "text-white/60 hover:text-white"
+                }`}
+              >
+                Annual Commitment
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/20 text-white font-extrabold uppercase tracking-wide">
+                  Save 15%
+                </span>
+              </button>
+            </div>
+          </div>
         </motion.div>
 
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto items-stretch">
           {PLANS.map((plan, index) => {
-            const waHref = `https://wa.me/919884344075?text=${encodeURIComponent(plan.whatsappText)}`;
+            const isAnnual = billingCycle === "annual";
+            const displayPrice = isAnnual
+              ? plan.name.includes("Starter")
+                ? "₹424"
+                : plan.name.includes("Turbo")
+                ? "₹594"
+                : "₹849"
+              : plan.price;
+
+            const annualNote = isAnnual
+              ? plan.name.includes("Starter")
+                ? "billed ₹5,088/yr (Save ₹900)"
+                : plan.name.includes("Turbo")
+                ? "billed ₹7,128/yr (Save ₹1,260)"
+                : "billed ₹10,188/yr (Save ₹1,800)"
+              : null;
+
+            const workloadChip = plan.name.includes("Starter")
+              ? "Up to 6 Simultaneous Devices"
+              : plan.name.includes("Turbo")
+              ? "12-16 Devices · 4K UHD & Gaming"
+              : "25+ Devices · Workstations & Cloud";
+
+            const waHref = `https://wa.me/919884344075?text=${encodeURIComponent(
+              `${plan.whatsappText} [Selected: ${isAnnual ? "Annual Plan with 15% discount" : "Monthly Plan"}]`
+            )}`;
 
             return (
               <motion.div
@@ -170,14 +227,14 @@ export default function PlansSection() {
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
                 className={`relative flex flex-col justify-between rounded-3xl p-8 transition-colors duration-300 ${
                   plan.popular
-                    ? "bg-[#110E28] border-2 border-[#EF1313]/60 shadow-[0_0_40px_rgba(239,19,19,0.22)] md:-translate-y-2"
+                    ? "bg-[#110E28] border-2 border-[#EF1313] shadow-[0_0_50px_rgba(239,19,19,0.28)] md:-translate-y-2 ring-2 ring-[#EF1313]/30"
                     : "bg-[#110E28]/80 border border-white/10 hover:border-white/20 shadow-xl"
                 }`}
               >
-                {/* Floating "MOST POPULAR" Badge */}
+                {/* Floating "MOST POPULAR" Badge (Trick 6: Von Restorff Effect) */}
                 {plan.popular && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#EF1313] text-white text-[11px] font-extrabold tracking-wider uppercase shadow-[0_0_20px_rgba(239,19,19,0.85)] z-20">
-                    MOST POPULAR
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[#EF1313] text-white text-[11px] font-extrabold tracking-wider uppercase shadow-[0_0_24px_rgba(239,19,19,0.9)] z-20">
+                    ★ MOST POPULAR CHOICE
                   </div>
                 )}
 
@@ -188,9 +245,14 @@ export default function PlansSection() {
                   </span>
 
                   {/* Plan Name */}
-                  <h3 className="text-2xl font-bold text-white mb-4 font-display">
+                  <h3 className="text-2xl font-bold text-white mb-2 font-display">
                     {plan.name}
                   </h3>
+
+                  {/* Workload / Device Chip (Trick 3: Concrete Value) */}
+                  <div className="mb-4 inline-block px-3 py-1 rounded-lg bg-white/6 text-xs text-white/70 font-medium border border-white/8">
+                    {workloadChip}
+                  </div>
 
                   {/* Speed */}
                   <div className="text-4xl lg:text-5xl font-black text-[#818CF8] tracking-tight mb-3 font-display">
@@ -198,13 +260,20 @@ export default function PlansSection() {
                   </div>
 
                   {/* Price */}
-                  <div className="flex items-baseline gap-1.5 mb-8">
-                    <span className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-                      {plan.price}
-                    </span>
-                    <span className="text-white/50 text-sm font-medium">
-                      {plan.period}
-                    </span>
+                  <div className="mb-6">
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+                        {displayPrice}
+                      </span>
+                      <span className="text-white/50 text-sm font-medium">
+                        {plan.period}
+                      </span>
+                    </div>
+                    {annualNote && (
+                      <p className="text-[11px] text-[#34D399] font-semibold mt-1">
+                        ✓ {annualNote}
+                      </p>
+                    )}
                   </div>
 
                   {/* Features List */}
