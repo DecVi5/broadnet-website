@@ -129,13 +129,6 @@ a, button { cursor: none; }
   box-shadow: 0 0 0 4px rgba(78,13,186,0.1);
 }
 
-/* Camera hanging animation */
-@keyframes cam-idle {
-  0%, 100% { transform: perspective(400px) rotateX(0deg) rotateY(0deg); }
-  33% { transform: perspective(400px) rotateX(1.5deg) rotateY(1deg); }
-  66% { transform: perspective(400px) rotateX(-1deg) rotateY(-1.5deg); }
-}
-
 /* Physical landing / stopping cushion animation */
 .section-arrival-cushion {
   animation: physical-brake-cushion 1.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;

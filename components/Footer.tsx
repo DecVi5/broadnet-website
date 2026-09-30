@@ -2,7 +2,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, MapPin, Mail, ArrowUpRight } from "lucide-react";
-import HangingCamera from "./HangingCamera";
 
 const QUICK_LINKS = [
   { label: "Security Solutions", href: "/security" },
@@ -22,7 +21,7 @@ const SERVICES = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#16143E] text-white relative overflow-visible pb-32">
+    <footer className="bg-[#16143E] text-white relative overflow-hidden pb-12 pt-16">
       {/* Decorative gradient top edge */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#4E0DBA] to-transparent" />
       {/* Background pattern */}
@@ -116,18 +115,13 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 relative">
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-white/35 text-center sm:text-left">
             © {new Date().getFullYear()} Broadnet Internet Services. All rights reserved.
           </p>
           <p className="text-sm font-semibold text-gradient text-center">
             A Safer, Smarter Tomorrow Starts Today
           </p>
-
-          {/* Realistic Surveillance Camera Hanging Under Footer */}
-          <div className="absolute -bottom-28 right-4 sm:right-16 z-30 pointer-events-auto">
-            <HangingCamera />
-          </div>
         </div>
       </div>
     </footer>
