@@ -1,0 +1,25 @@
+[
+  {
+    "name": "Vikram Malhotra",
+    "phone": "+91 9811223344",
+    "location": "South Extension, New Delhi",
+    "enquiryType": "Security Enquiry",
+    "requirements": [
+      "CCTV Surveillance"
+    ],
+    "message": "Need high speed fiber and 4 cameras.",
+    "timestamp": "2026-09-30T13:52:24.898Z"
+  },
+  {
+    "name": "Rohit Verma",
+    "phone": "+91 98765 12345",
+    "location": "Noida Sector 62",
+    "enquiryType": "Security Enquiry",
+    "requirements": [
+      "CCTV Surveillance",
+      "Access Control"
+    ],
+    "message": "Need 16 HD cameras and NVR setup.",
+    "timestamp": "2026-09-30T13:51:09.722Z"
+  }
+]
