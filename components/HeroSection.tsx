@@ -42,7 +42,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-16 bg-white text-[#16143E]"
+      className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-20 pb-12 bg-white text-[#16143E]"
     >
       {/* Background — clean subtle grid */}
       <div className="absolute inset-0 pointer-events-none select-none">
@@ -54,14 +54,14 @@ export default function HeroSection() {
             backgroundSize: "72px 72px",
           }}
         />
-        {/* Soft radial atmospheric blobs */}
+        {/* Centered ambient radial glows */}
         <div
-          className="absolute top-1/3 right-1/4 w-96 h-96 rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(78,13,186,0.055) 0%, transparent 72%)" }}
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(ellipse at center, rgba(78,13,186,0.06) 0%, transparent 70%)" }}
         />
         <div
-          className="absolute bottom-1/3 left-1/4 w-72 h-72 rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(239,19,19,0.04) 0%, transparent 70%)" }}
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(239,19,19,0.035) 0%, transparent 70%)" }}
         />
       </div>
 
@@ -86,7 +86,7 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Gentle Motion Transition Wrapper */}
+      {/* Centered Content Wrapper */}
       <motion.div
         initial={{ opacity: 0.15, scale: 0.985, y: 10 }}
         animate={
@@ -95,273 +95,155 @@ export default function HeroSection() {
             : { opacity: 0.15, scale: 0.985, y: 10 }
         }
         transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20 lg:py-28 pointer-events-none w-full"
+        className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center pointer-events-none w-full"
       >
-        <div className="grid lg:grid-cols-5 gap-16 items-center">
-          {/* Left content (3/5) */}
-          <div className="lg:col-span-3">
-            {/* Social Proof Trust Strip */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55 }}
-              className="flex flex-wrap items-center gap-3.5 mb-5 pointer-events-auto"
-            >
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#16143E]/4 border border-[#16143E]/10 backdrop-blur-sm shadow-sm">
-                <div className="flex items-center text-[#F59E0B]">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={12} className="fill-[#F59E0B]" />
-                  ))}
-                </div>
-                <span className="text-xs font-bold text-[#16143E]">4.9/5</span>
-                <span className="text-xs text-[#16143E]/50">Google Rating</span>
-              </div>
-
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-[#16143E]/70">
-                <CheckCircle2 size={14} className="text-[#25D366] flex-shrink-0" />
-                <span>420+ Certified Deployments in Avadi</span>
-              </div>
-            </motion.div>
-
-            {/* Eyebrow */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.55, delay: 0.05 }}
-              className="flex items-center gap-3 mb-7 pointer-events-auto"
-            >
-              <div className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#4E0DBA]/18 bg-[#4E0DBA]/5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#4E0DBA] animate-pulse" />
-                <span
-                  className="text-xs font-semibold text-[#4E0DBA] tracking-widest uppercase font-display"
-                >
-                  Avadi · Chennai · Direct Fiber & ELV Partner
-                </span>
-              </div>
-            </motion.div>
-
-            {/* Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.04] tracking-tight mb-6 text-[#16143E]"
-              style={{ fontFamily: "Syne, sans-serif" }}
-            >
-              Engineered{" "}
-              <span className="text-gradient">Connectivity.</span>
-              <br />
-              Intelligent{" "}
-              <span className="relative inline-block text-[#16143E]">
-                Surveillance.
-                <svg className="absolute -bottom-1 left-0 w-full" height="3" viewBox="0 0 300 3" preserveAspectRatio="none">
-                  <path d="M0 1.5 Q75 0 150 1.5 Q225 3 300 1.5" stroke="#EF1313" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-                </svg>
-              </span>
-            </motion.h1>
-
-            {/* Sub */}
-            <motion.p
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.22 }}
-              className="text-[#16143E]/65 text-lg leading-relaxed mb-10 max-w-xl"
-              style={{ fontFamily: "DM Sans, sans-serif" }}
-            >
-              From high-speed fiber internet to enterprise CCTV and ELV systems — Broadnet delivers infrastructure-grade solutions with guaranteed uptime and 2-hour on-site dispatch.
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              className="flex flex-wrap gap-4 mb-14 pointer-events-auto"
-            >
-              <button
-                type="button"
-                onClick={() => scrollToWithPhysics("enquiry")}
-                className="btn-crimson shadow-xl shadow-[#EF1313]/30 hover:shadow-[#EF1313]/55 transition-all duration-300 ring-4 ring-[#EF1313]/15 hover:ring-[#EF1313]/35 group"
-              >
-                Request Enquiry <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollToWithPhysics("security")}
-                className="flex items-center gap-2 px-6 py-3 rounded-full border border-[#16143E]/14 text-sm font-semibold text-[#16143E]/75 hover:text-[#16143E] hover:border-[#16143E]/28 bg-white/80 backdrop-blur-sm transition-all duration-200"
-                style={{ fontFamily: "Syne, sans-serif" }}
-              >
-                <Shield size={15} /> Security Solutions
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollToWithPhysics("internet")}
-                className="flex items-center gap-2 px-6 py-3 rounded-full border border-[#16143E]/14 text-sm font-semibold text-[#16143E]/75 hover:text-[#16143E] hover:border-[#16143E]/28 bg-white/80 backdrop-blur-sm transition-all duration-200"
-                style={{ fontFamily: "Syne, sans-serif" }}
-              >
-                <Wifi size={15} /> Internet Plans
-              </button>
-            </motion.div>
-
-            {/* Metrics */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.65, delay: 0.48 }}
-              className="grid grid-cols-2 sm:grid-cols-4 gap-4 pointer-events-auto"
-            >
-              {METRICS.map((m, i) => (
-                <div
-                  key={m.label}
-                  className={`p-4 rounded-2xl border transition-all duration-500 backdrop-blur-sm ${
-                    tick === i
-                      ? "border-[#4E0DBA]/40 bg-[#4E0DBA]/6 shadow-lg shadow-[#4E0DBA]/8"
-                      : "border-[#16143E]/8 bg-white/85 shadow-sm"
-                  }`}
-                >
-                  <div
-                    className="text-2xl font-bold text-[#16143E] mb-0.5"
-                    style={{ fontFamily: "Syne, sans-serif" }}
-                  >
-                    {m.value}
-                  </div>
-                  <div
-                    className="text-xs text-[#16143E]/75 font-semibold uppercase tracking-wider"
-                    style={{ fontFamily: "DM Sans, sans-serif" }}
-                  >
-                    {m.label}
-                  </div>
-                  <div
-                    className="text-[11px] text-[#4E0DBA] font-semibold mt-1"
-                    style={{ fontFamily: "DM Sans, sans-serif" }}
-                  >
-                    {m.detail}
-                  </div>
-                </div>
+        {/* Social Proof Trust Strip */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55 }}
+          className="flex flex-wrap items-center justify-center gap-3.5 mb-5 pointer-events-auto"
+        >
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#16143E]/4 border border-[#16143E]/10 backdrop-blur-sm shadow-sm">
+            <div className="flex items-center text-[#F59E0B]">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={12} className="fill-[#F59E0B]" />
               ))}
-            </motion.div>
+            </div>
+            <span className="text-xs font-bold text-[#16143E]">4.9/5</span>
+            <span className="text-xs text-[#16143E]/50">Google Rating</span>
           </div>
 
-          {/* Right visual (2/5) — Clean network diagram */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.18 }}
-            className="hidden lg:flex lg:col-span-2 items-center justify-center pointer-events-auto"
-          >
-            <div className="relative w-64 h-64">
-              <svg viewBox="0 0 260 260" width="260" height="260" className="absolute inset-0">
-                <defs>
-                  <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#4E0DBA" />
-                    <stop offset="100%" stopColor="#16143E" />
-                  </radialGradient>
-                </defs>
-                {/* Connection lines */}
-                {[
-                  [130, 130, 130, 30],
-                  [130, 130, 222, 80],
-                  [130, 130, 222, 180],
-                  [130, 130, 130, 230],
-                  [130, 130, 38, 180],
-                  [130, 130, 38, 80],
-                ].map(([x1, y1, x2, y2], i) => (
-                  <line
-                    key={i}
-                    x1={x1}
-                    y1={y1}
-                    x2={x2}
-                    y2={y2}
-                    stroke="rgba(78,13,186,0.18)"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 4"
-                  />
-                ))}
-                {/* Outer nodes */}
-                {[
-                  { cx: 130, cy: 30, label: "Fiber" },
-                  { cx: 222, cy: 80, label: "CCTV" },
-                  { cx: 222, cy: 180, label: "WiFi" },
-                  { cx: 130, cy: 230, label: "LAN" },
-                  { cx: 38, cy: 180, label: "ELV" },
-                  { cx: 38, cy: 80, label: "VPN" },
-                ].map((n, i) => (
-                  <g key={i}>
-                    <circle
-                      cx={n.cx}
-                      cy={n.cy}
-                      r="22"
-                      fill="white"
-                      stroke="rgba(78,13,186,0.2)"
-                      strokeWidth="1.5"
-                    />
-                    <circle cx={n.cx} cy={n.cy} r="16" fill="rgba(78,13,186,0.06)" />
-                    <text
-                      x={n.cx}
-                      y={n.cy + 4}
-                      textAnchor="middle"
-                      fontSize="8"
-                      fontWeight="700"
-                      fill="#4E0DBA"
-                      style={{ fontFamily: "Syne, sans-serif" }}
-                    >
-                      {n.label}
-                    </text>
-                  </g>
-                ))}
-                {/* Centre node — BN */}
-                <circle cx="130" cy="130" r="40" fill="url(#nodeGrad)" />
-                <circle cx="130" cy="130" r="34" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
-                <text
-                  x="130"
-                  y="127"
-                  textAnchor="middle"
-                  fontSize="14"
-                  fontWeight="800"
-                  fill="white"
-                  style={{ fontFamily: "Syne, sans-serif" }}
-                >
-                  BN
-                </text>
-                <text
-                  x="130"
-                  y="141"
-                  textAnchor="middle"
-                  fontSize="6.5"
-                  fill="rgba(255,255,255,0.6)"
-                  style={{ fontFamily: "DM Sans, sans-serif", letterSpacing: "0.1em" }}
-                >
-                  BROADNET
-                </text>
-              </svg>
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#16143E]/70">
+            <CheckCircle2 size={14} className="text-[#25D366] flex-shrink-0" />
+            <span>420+ Certified Deployments in Avadi</span>
+          </div>
+        </motion.div>
 
-              {/* Floating cards */}
-              <div className="absolute -top-4 -right-6 px-4 py-2.5 bg-white rounded-2xl shadow-xl border border-[#16143E]/8">
-                <div className="text-lg font-bold text-[#4E0DBA]" style={{ fontFamily: "Syne, sans-serif" }}>
-                  99.9%
-                </div>
-                <div className="text-xs text-[#16143E]/45" style={{ fontFamily: "DM Sans, sans-serif" }}>
-                  Uptime SLA
-                </div>
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.05 }}
+          className="flex items-center justify-center mb-6 pointer-events-auto"
+        >
+          <div className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#4E0DBA]/18 bg-[#4E0DBA]/5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#4E0DBA] animate-pulse" />
+            <span
+              className="text-xs font-semibold text-[#4E0DBA] tracking-widest uppercase font-display"
+            >
+              Avadi · Chennai · Direct Fiber & ELV Partner
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="text-5xl sm:text-6xl md:text-7xl font-bold leading-[1.06] tracking-tight mb-6 text-[#16143E] max-w-4xl"
+          style={{ fontFamily: "Syne, sans-serif" }}
+        >
+          Engineered{" "}
+          <span className="text-gradient">Connectivity.</span>
+          <br className="hidden sm:inline" />
+          Intelligent{" "}
+          <span className="relative inline-block text-[#16143E]">
+            Surveillance.
+            <svg className="absolute -bottom-1.5 left-0 w-full" height="4" viewBox="0 0 300 4" preserveAspectRatio="none">
+              <path d="M0 2 Q75 0.5 150 2 Q225 3.5 300 2" stroke="#EF1313" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+            </svg>
+          </span>
+        </motion.h1>
+
+        {/* Sub */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-[#16143E]/65 text-lg sm:text-xl leading-relaxed mb-9 max-w-2xl mx-auto"
+          style={{ fontFamily: "DM Sans, sans-serif" }}
+        >
+          From high-speed fiber internet to enterprise CCTV and ELV systems — Broadnet delivers infrastructure-grade solutions with guaranteed uptime and 2-hour on-site dispatch.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-wrap items-center justify-center gap-3.5 sm:gap-4 mb-12 pointer-events-auto"
+        >
+          <button
+            type="button"
+            onClick={() => scrollToWithPhysics("enquiry")}
+            className="btn-crimson shadow-xl shadow-[#EF1313]/30 hover:shadow-[#EF1313]/55 transition-all duration-300 ring-4 ring-[#EF1313]/15 hover:ring-[#EF1313]/35 group"
+          >
+            Request Enquiry <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToWithPhysics("security")}
+            className="flex items-center gap-2 px-6 py-3 rounded-full border border-[#16143E]/14 text-sm font-semibold text-[#16143E]/75 hover:text-[#16143E] hover:border-[#16143E]/28 bg-white/80 backdrop-blur-sm transition-all duration-200"
+            style={{ fontFamily: "Syne, sans-serif" }}
+          >
+            <Shield size={15} /> Security Solutions
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollToWithPhysics("internet")}
+            className="flex items-center gap-2 px-6 py-3 rounded-full border border-[#16143E]/14 text-sm font-semibold text-[#16143E]/75 hover:text-[#16143E] hover:border-[#16143E]/28 bg-white/80 backdrop-blur-sm transition-all duration-200"
+            style={{ fontFamily: "Syne, sans-serif" }}
+          >
+            <Wifi size={15} /> Internet Plans
+          </button>
+        </motion.div>
+
+        {/* Metrics Centered Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.4 }}
+          className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4 w-full max-w-4xl pointer-events-auto"
+        >
+          {METRICS.map((m, i) => (
+            <div
+              key={m.label}
+              className={`p-4 rounded-2xl border transition-all duration-500 backdrop-blur-sm text-center ${
+                tick === i
+                  ? "border-[#4E0DBA]/40 bg-[#4E0DBA]/6 shadow-lg shadow-[#4E0DBA]/8"
+                  : "border-[#16143E]/8 bg-white/85 shadow-sm hover:shadow-md"
+              }`}
+            >
+              <div
+                className="text-2xl font-bold text-[#16143E] mb-0.5"
+                style={{ fontFamily: "Syne, sans-serif" }}
+              >
+                {m.value}
               </div>
-              <div className="absolute -bottom-2 -left-4 px-4 py-2.5 bg-[#16143E] rounded-2xl shadow-xl">
-                <div className="text-lg font-bold text-white" style={{ fontFamily: "Syne, sans-serif" }}>
-                  24/7
-                </div>
-                <div className="text-xs text-white/55" style={{ fontFamily: "DM Sans, sans-serif" }}>
-                  Tech Support
-                </div>
+              <div
+                className="text-xs text-[#16143E]/75 font-semibold uppercase tracking-wider"
+                style={{ fontFamily: "DM Sans, sans-serif" }}
+              >
+                {m.label}
+              </div>
+              <div
+                className="text-[11px] text-[#4E0DBA] font-semibold mt-1"
+                style={{ fontFamily: "DM Sans, sans-serif" }}
+              >
+                {m.detail}
               </div>
             </div>
-          </motion.div>
-        </div>
+          ))}
+        </motion.div>
       </motion.div>
 
       {/* Scroll cue */}
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 2.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[#16143E]/30 hover:text-[#16143E]/70 pointer-events-auto transition-colors"
+        className="mt-6 flex flex-col items-center gap-1 text-[#16143E]/30 hover:text-[#16143E]/70 pointer-events-auto transition-colors z-20"
       >
         <span className="text-xs tracking-widest uppercase font-medium" style={{ fontFamily: "DM Sans, sans-serif" }}>
           Scroll
