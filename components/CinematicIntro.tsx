@@ -22,21 +22,28 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
     // Stage 2: Subtitle shows "Internet Services" and "Security Systems" (1.4s -> 3.2s)
     const t2 = setTimeout(() => {
       setStage("splitting");
+      window.dispatchEvent(new CustomEvent("broadnet:intro-splitting"));
     }, 3200);
 
     // Stage 3: Split curtains and reveal hero page (3.2s -> 4.4s)
     const t3 = setTimeout(() => {
       setStage("done");
+      window.dispatchEvent(new CustomEvent("broadnet:intro-done"));
       onComplete?.();
     }, 4400);
 
     const handleReplay = () => {
       setStage("intro");
       setHasStarted(true);
+      window.dispatchEvent(new CustomEvent("broadnet:intro-reset"));
       setTimeout(() => setStage("subtitle"), 1400);
-      setTimeout(() => setStage("splitting"), 3200);
+      setTimeout(() => {
+        setStage("splitting");
+        window.dispatchEvent(new CustomEvent("broadnet:intro-splitting"));
+      }, 3200);
       setTimeout(() => {
         setStage("done");
+        window.dispatchEvent(new CustomEvent("broadnet:intro-done"));
         onComplete?.();
       }, 4400);
     };
@@ -55,10 +62,12 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
   const handleSkip = () => {
     if (stage !== "splitting" && stage !== "done") {
       setStage("splitting");
+      window.dispatchEvent(new CustomEvent("broadnet:intro-splitting"));
       setTimeout(() => {
         setStage("done");
+        window.dispatchEvent(new CustomEvent("broadnet:intro-done"));
         onComplete?.();
-      }, 1000);
+      }, 900);
     }
   };
 
@@ -87,9 +96,9 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
     >
       {/* ================= LEFT SHUTTER ================= */}
       <motion.div
-        initial={{ x: 0 }}
-        animate={isSplitting ? { x: "-100%" } : { x: 0 }}
-        transition={{ duration: 1.1, ease: "easeInOut" }}
+        initial={{ x: 0, opacity: 1 }}
+        animate={isSplitting ? { x: "-102%", opacity: [1, 1, 0.9, 0] } : { x: 0, opacity: 1 }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         className="absolute top-0 left-0 w-1/2 h-full bg-[#070B28] z-20 overflow-hidden flex items-center justify-end"
         style={{
           background: "radial-gradient(circle at 100% 50%, #0E1855 0%, #070B28 75%, #040618 100%)",
@@ -107,8 +116,11 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
         {/* Ambient blue glow orb */}
         <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-[#0047FF]/20 blur-[100px] pointer-events-none" />
 
+        {/* Inner seam soft trailing feather */}
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#00C2FF]/20 via-[#070B28]/60 to-transparent pointer-events-none" />
+
         {/* Left text portion (BROAD) */}
-        <div className="pr-2 sm:pr-4 text-right flex items-center">
+        <div className="pr-2 sm:pr-4 text-right flex items-center relative z-10">
           <div className="flex">
             {"BROAD".split("").map((char, i) => (
               <motion.span
@@ -138,7 +150,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
                   ? { opacity: 0, x: -80, transition: { duration: 0.6 } }
                   : { opacity: 1, x: 0, transition: { duration: 0.6, delay: 0.1 } }
               }
-              className="absolute right-4 sm:right-10 top-[60%] sm:top-[62%] flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#00C2FF]/30 bg-[#00C2FF]/10 backdrop-blur-md shadow-[0_0_25px_rgba(0,194,255,0.25)]"
+              className="absolute right-4 sm:right-10 top-[60%] sm:top-[62%] flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#00C2FF]/30 bg-[#00C2FF]/10 backdrop-blur-md shadow-[0_0_25px_rgba(0,194,255,0.25)] z-10"
             >
               <Wifi size={16} className="text-[#00C2FF] animate-pulse" />
               <span className="text-xs sm:text-sm font-bold text-white tracking-wider uppercase font-display whitespace-nowrap">
@@ -149,14 +161,14 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
         </AnimatePresence>
 
         {/* Left seam light highlight */}
-        <div className="absolute right-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-[#00C2FF] to-transparent shadow-[0_0_20px_#00C2FF]" />
+        <div className="absolute right-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-[#00C2FF] to-transparent shadow-[0_0_25px_#00C2FF]" />
       </motion.div>
 
       {/* ================= RIGHT SHUTTER ================= */}
       <motion.div
-        initial={{ x: 0 }}
-        animate={isSplitting ? { x: "100%" } : { x: 0 }}
-        transition={{ duration: 1.1, ease: "easeInOut" }}
+        initial={{ x: 0, opacity: 1 }}
+        animate={isSplitting ? { x: "102%", opacity: [1, 1, 0.9, 0] } : { x: 0, opacity: 1 }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         className="absolute top-0 right-0 w-1/2 h-full bg-[#070B28] z-20 overflow-hidden flex items-center justify-start"
         style={{
           background: "radial-gradient(circle at 0% 50%, #0E1855 0%, #070B28 75%, #040618 100%)",
@@ -174,8 +186,11 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
         {/* Ambient red/purple glow orb */}
         <div className="absolute -left-32 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-[#EF1313]/20 blur-[100px] pointer-events-none" />
 
+        {/* Inner seam soft trailing feather */}
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#EF1313]/20 via-[#070B28]/60 to-transparent pointer-events-none" />
+
         {/* Right text portion (NET) */}
-        <div className="pl-2 sm:pr-4 text-left flex items-center">
+        <div className="pl-2 sm:pr-4 text-left flex items-center relative z-10">
           <div className="flex">
             {"NET".split("").map((char, i) => (
               <motion.span
@@ -205,7 +220,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
                   ? { opacity: 0, x: 80, transition: { duration: 0.6 } }
                   : { opacity: 1, x: 0, transition: { duration: 0.6, delay: 0.2 } }
               }
-              className="absolute left-4 sm:left-10 top-[60%] sm:top-[62%] flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#EF1313]/35 bg-[#EF1313]/10 backdrop-blur-md shadow-[0_0_25px_rgba(239,19,19,0.25)]"
+              className="absolute left-4 sm:left-10 top-[60%] sm:top-[62%] flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#EF1313]/35 bg-[#EF1313]/10 backdrop-blur-md shadow-[0_0_25px_rgba(239,19,19,0.25)] z-10"
             >
               <Shield size={16} className="text-[#EF1313] animate-pulse" />
               <span className="text-xs sm:text-sm font-bold text-white tracking-wider uppercase font-display whitespace-nowrap">
@@ -216,21 +231,43 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
         </AnimatePresence>
 
         {/* Right seam light highlight */}
-        <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-[#EF1313] to-transparent shadow-[0_0_20px_#EF1313]" />
+        <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-[#EF1313] to-transparent shadow-[0_0_25px_#EF1313]" />
       </motion.div>
 
-      {/* ================= CENTER LIGHT BEAM / SEAM ON SPLIT ================= */}
+      {/* ================= RADIANT LENS FLARE / LIGHT BURST ON SPLIT ================= */}
       <AnimatePresence>
         {isSplitting && (
-          <motion.div
-            initial={{ opacity: 0, scaleY: 0 }}
-            animate={{ opacity: [0, 1, 0.8, 0], scaleY: 1, scaleX: [1, 3, 0] }}
-            transition={{ duration: 1.0, ease: "easeOut" }}
-            className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-4 bg-white blur-[8px] z-30 pointer-events-none"
-            style={{
-              boxShadow: "0 0 50px #00C2FF, 0 0 100px #EF1313",
-            }}
-          />
+          <>
+            {/* Luminous expanding radial energy burst */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.15 }}
+              animate={{
+                opacity: [0, 1, 0.75, 0],
+                scale: [0.2, 1.3, 2.5],
+              }}
+              transition={{ duration: 1.15, ease: "easeOut" }}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] rounded-full pointer-events-none z-30"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(0,194,255,0.65) 22%, rgba(78,13,186,0.3) 48%, rgba(239,19,19,0.18) 68%, transparent 80%)",
+                filter: "blur(22px)",
+              }}
+            />
+            {/* Vertical light seam beam */}
+            <motion.div
+              initial={{ opacity: 0, scaleY: 0, scaleX: 1 }}
+              animate={{
+                opacity: [0, 1, 0.8, 0],
+                scaleY: [0, 1, 1],
+                scaleX: [1, 4.5, 0],
+              }}
+              transition={{ duration: 1.05, ease: "easeOut" }}
+              className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-4 bg-white blur-[8px] z-30 pointer-events-none"
+              style={{
+                boxShadow: "0 0 50px #00C2FF, 0 0 100px #EF1313",
+              }}
+            />
+          </>
         )}
       </AnimatePresence>
 
