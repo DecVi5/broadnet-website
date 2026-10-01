@@ -302,75 +302,77 @@ export default function LocationChecker() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Serving Locations Directory Grid */}
-        <div className="mb-14">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold text-white font-display flex items-center gap-2">
-              <MapPin size={18} className="text-[#00C2FF]" />
-              <span>Serving Localities & Fiber Clusters</span>
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-white/10 text-white/70 font-mono">
+        {/* Condensed Serving Locations Directory */}
+        <div className="max-w-5xl mx-auto mb-12 bg-[#100D2C]/80 border border-white/10 rounded-3xl p-5 sm:p-7 backdrop-blur-md">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-white/8">
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-[#00C2FF]/10 border border-[#00C2FF]/20 flex items-center justify-center">
+                <MapPin size={15} className="text-[#00C2FF]" />
+              </div>
+              <h3 className="text-base font-bold text-white font-display">
+                Serving Localities & Fiber Clusters
+              </h3>
+              <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-white/10 text-white/70 font-mono font-medium">
                 {filteredLocations.length} Areas
               </span>
-            </h3>
-            <span className="text-xs text-white/50 hidden sm:inline">
-              Click any area to view feasibility & instant booking
+            </div>
+            <span className="text-xs text-white/40">
+              Click any area to test feasibility & book
             </span>
           </div>
 
           {filteredLocations.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-              {filteredLocations.map((loc) => {
-                const isSelected = activeResult?.name === loc.name;
-                return (
-                  <div
-                    key={loc.name}
-                    onClick={() => handleSelectLocation(loc)}
-                    className={`p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex items-center justify-between group ${
-                      isSelected
-                        ? "bg-[#1C1747] border-[#00C2FF] shadow-lg shadow-[#00C2FF]/10 ring-1 ring-[#00C2FF]/40"
-                        : "bg-[#110E2A]/70 border-white/8 hover:border-white/20 hover:bg-[#151136]"
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="mt-0.5 w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#4E0DBA]/30 transition-colors">
-                        <MapPin size={15} className="text-[#00C2FF]" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-sm text-white group-hover:text-[#00C2FF] transition-colors">
+            <div className="max-h-[300px] overflow-y-auto pr-1.5 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                {filteredLocations.map((loc) => {
+                  const isSelected = activeResult?.name === loc.name;
+                  return (
+                    <button
+                      key={loc.name}
+                      type="button"
+                      onClick={() => handleSelectLocation(loc)}
+                      className={`w-full px-3 py-2.5 rounded-xl border text-left transition-all duration-200 flex items-center justify-between gap-2 group ${
+                        isSelected
+                          ? "bg-[#4E0DBA]/30 border-[#00C2FF] shadow-md shadow-[#00C2FF]/10 ring-1 ring-[#00C2FF]/60"
+                          : "bg-[#141038]/70 border-white/8 hover:border-white/20 hover:bg-[#1B1647]"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span
+                          className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                            loc.status === "live"
+                              ? "bg-emerald-400 shadow-[0_0_6px_#34D399]"
+                              : "bg-amber-400 shadow-[0_0_6px_#FBBF24]"
+                          }`}
+                          title={loc.status === "live" ? "Fiber Live" : "Line Expansion"}
+                        />
+                        <div className="min-w-0 flex items-baseline gap-1.5 truncate">
+                          <span className="font-semibold text-xs text-white group-hover:text-[#00C2FF] transition-colors truncate">
                             {loc.name}
                           </span>
-                          <span className="text-[10px] font-mono text-white/50">
+                          <span className="text-[10px] font-mono text-white/40 flex-shrink-0">
                             {loc.pincode}
                           </span>
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-white/50 mt-0.5">
-                          <span>{loc.zone}</span>
-                          <span>•</span>
-                          <span className="text-emerald-400 font-medium">
-                            {loc.speed}
-                          </span>
-                        </div>
                       </div>
-                    </div>
 
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`w-2 h-2 rounded-full ${
-                          loc.status === "live"
-                            ? "bg-emerald-400 animate-pulse shadow-[0_0_8px_#34D399]"
-                            : "bg-amber-400"
-                        }`}
-                        title={loc.status === "live" ? "Fiber Live" : "Expansion"}
-                      />
-                      <ChevronRight
-                        size={15}
-                        className="text-white/30 group-hover:text-white group-hover:translate-x-0.5 transition-all"
-                      />
-                    </div>
-                  </div>
-                );
-              })}
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                          {loc.speed.replace("Up to ", "")}
+                        </span>
+                        <ChevronRight
+                          size={12}
+                          className={`transition-transform duration-200 ${
+                            isSelected
+                              ? "text-[#00C2FF] translate-x-0.5"
+                              : "text-white/25 group-hover:text-white/60"
+                          }`}
+                        />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           ) : (
             /* Empty Search Fallback */
