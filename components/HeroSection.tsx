@@ -23,8 +23,8 @@ export default function HeroSection() {
   }, []);
 
   useEffect(() => {
-    // If intro has already shown, reveal Hero immediately
-    if (typeof window !== "undefined" && (localStorage.getItem("broadnet_intro_shown") || sessionStorage.getItem("broadnet_intro_shown"))) {
+    // If intro has already completed in this session, reveal Hero immediately
+    if (typeof window !== "undefined" && sessionStorage.getItem("broadnet_intro_completed")) {
       setIsRevealed(true);
     }
 
@@ -33,8 +33,8 @@ export default function HeroSection() {
     window.addEventListener("broadnet:intro-splitting", onReveal);
     window.addEventListener("broadnet:intro-done", onReveal);
 
-    // Fast fallback so Hero is never left blank
-    const fallback = setTimeout(() => setIsRevealed(true), 800);
+    // Fallback so Hero is revealed after intro finishes or if skipped
+    const fallback = setTimeout(() => setIsRevealed(true), 3500);
 
     return () => {
       window.removeEventListener("broadnet:intro-splitting", onReveal);

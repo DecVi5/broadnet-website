@@ -14,12 +14,15 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
   const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(() => {
-    // Check if intro has already run
-    const hasShown = typeof window !== "undefined"
-      ? (localStorage.getItem("broadnet_intro_shown") || sessionStorage.getItem("broadnet_intro_shown"))
-      : null;
+    // Clear any obsolete localStorage lock from previous builds
+    try {
+      localStorage.removeItem("broadnet_intro_shown");
+    } catch {}
 
-    if (hasShown) {
+    // Check if intro has already run in this session
+    const isCompleted = typeof window !== "undefined" && sessionStorage.getItem("broadnet_intro_completed");
+
+    if (isCompleted) {
       setStage("done");
       setShouldRender(false);
       window.dispatchEvent(new CustomEvent("broadnet:intro-done"));
@@ -27,15 +30,9 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
       return;
     }
 
-    // First time visitor: activate opening sequence
+    // First time in this session: activate opening sequence
     setShouldRender(true);
     setStage("intro");
-    try {
-      localStorage.setItem("broadnet_intro_shown", "true");
-      sessionStorage.setItem("broadnet_intro_shown", "true");
-    } catch {
-      // ignore storage error
-    }
 
     // Stage 1 -> Subtitle (1.3s)
     const t1 = setTimeout(() => {
@@ -52,6 +49,9 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
     const t3 = setTimeout(() => {
       setStage("done");
       setShouldRender(false);
+      try {
+        sessionStorage.setItem("broadnet_intro_completed", "true");
+      } catch {}
       window.dispatchEvent(new CustomEvent("broadnet:intro-done"));
       onComplete?.();
     }, 3900);
@@ -68,11 +68,15 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
     if (stage !== "splitting" && stage !== "done") {
       setStage("splitting");
       window.dispatchEvent(new CustomEvent("broadnet:intro-splitting"));
+      try {
+        sessionStorage.setItem("broadnet_intro_completed", "true");
+      } catch {}
       setTimeout(() => {
         setStage("done");
+        setShouldRender(false);
         window.dispatchEvent(new CustomEvent("broadnet:intro-done"));
         onComplete?.();
-      }, 900);
+      }, 700);
     }
   };
 
