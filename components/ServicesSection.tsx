@@ -223,29 +223,34 @@ export default function ServicesSection() {
                 <ServiceCard key={s.title} {...s} index={i} />
               ))}
             </div>
-
-            {/* Certifications */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.55 }}
-              className="mt-8 p-6 rounded-3xl border border-[#16143E]/10 bg-[#16143E]/2"
-            >
-              <p className="text-xs font-bold uppercase tracking-widest text-[#16143E]/40 mb-4">Certifications & Partnerships</p>
-              <div className="flex flex-wrap gap-2.5">
-                {["Hikvision HCSA", "CP PLUS CSE", "Grandstream Certified", "eSSL Partner", "Tactine Dealer"].map((cert) => (
-                  <span
-                    key={cert}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold border border-[#4E0DBA]/20 text-[#4E0DBA] bg-[#4E0DBA]/5 shadow-sm hover:bg-[#4E0DBA]/10 transition-colors"
-                  >
-                    <BadgeCheck size={14} className="text-[#4E0DBA] flex-shrink-0" />
-                    {cert}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
           </div>
         </div>
+
+        {/* Certifications & Partnerships - Spanning Horizontally */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.55 }}
+          className="mt-10 p-6 md:p-7 rounded-3xl border border-[#16143E]/10 bg-[#16143E]/[0.02] flex flex-col lg:flex-row lg:items-center justify-between gap-5"
+        >
+          <div className="flex items-center gap-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#EF1313] animate-pulse flex-shrink-0" />
+            <p className="text-xs font-bold uppercase tracking-widest text-[#16143E]/60 whitespace-nowrap">
+              Certifications & Partnerships
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+            {["Hikvision HCSA", "CP PLUS CSE", "Grandstream Certified", "eSSL Partner", "Tactine Dealer"].map((cert) => (
+              <span
+                key={cert}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold border border-[#4E0DBA]/20 text-[#4E0DBA] bg-[#4E0DBA]/5 shadow-sm hover:bg-[#4E0DBA]/10 transition-colors"
+              >
+                <BadgeCheck size={14} className="text-[#4E0DBA] flex-shrink-0" />
+                {cert}
+              </span>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
