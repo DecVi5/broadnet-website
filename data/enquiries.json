@@ -1,5 +1,25 @@
 [
   {
+    "name": "Test User",
+    "phone": "9876543210",
+    "location": "Cholambedu",
+    "enquiryType": "Internet Enquiry",
+    "requirements": [
+      "Broadnet FTTH Plans"
+    ],
+    "message": "Testing website enquiry form submission.",
+    "timestamp": "2026-10-01T00:05:16.448Z"
+  },
+  {
+    "name": "Mobile Test",
+    "phone": "+91 98843 44075",
+    "location": "",
+    "enquiryType": "Security Enquiry",
+    "requirements": [],
+    "message": "",
+    "timestamp": "2026-09-30T23:43:44.400Z"
+  },
+  {
     "name": "Vikram Malhotra",
     "phone": "+91 9811223344",
     "location": "South Extension, New Delhi",

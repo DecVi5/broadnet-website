@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import PlansSection from "@/components/PlansSection";
+import LocationChecker from "@/components/LocationChecker";
 import AdvantageSection from "@/components/AdvantageSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import EnquirySection from "@/components/EnquirySection";
@@ -17,6 +18,7 @@ export default function HomePage() {
         <HeroSection />
         <ServicesSection />
         <PlansSection />
+        <LocationChecker />
         <AdvantageSection />
         <TestimonialsSection />
         <EnquirySection />

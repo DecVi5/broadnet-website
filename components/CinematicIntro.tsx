@@ -9,52 +9,57 @@ interface CinematicIntroProps {
 }
 
 export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
-  // Sequence stages: "idle" -> "intro" -> "subtitle" -> "splitting" -> "done"
-  const [stage, setStage] = useState<"intro" | "subtitle" | "splitting" | "done">("intro");
-  const [hasStarted, setHasStarted] = useState(true);
+  // Sequence stages: "intro" -> "subtitle" -> "splitting" -> "done"
+  const [stage, setStage] = useState<"intro" | "subtitle" | "splitting" | "done">("done");
+  const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(() => {
-    // Stage 1: Broadnet appears (0s -> 1.4s)
+    // Check if intro has already run
+    const hasShown = typeof window !== "undefined"
+      ? (localStorage.getItem("broadnet_intro_shown") || sessionStorage.getItem("broadnet_intro_shown"))
+      : null;
+
+    if (hasShown) {
+      setStage("done");
+      setShouldRender(false);
+      window.dispatchEvent(new CustomEvent("broadnet:intro-done"));
+      onComplete?.();
+      return;
+    }
+
+    // First time visitor: activate opening sequence
+    setShouldRender(true);
+    setStage("intro");
+    try {
+      localStorage.setItem("broadnet_intro_shown", "true");
+      sessionStorage.setItem("broadnet_intro_shown", "true");
+    } catch {
+      // ignore storage error
+    }
+
+    // Stage 1 -> Subtitle (1.3s)
     const t1 = setTimeout(() => {
       setStage("subtitle");
-    }, 1400);
+    }, 1300);
 
-    // Stage 2: Subtitle shows "Internet Services" and "Security Systems" (1.4s -> 3.2s)
+    // Stage 2 -> Curtains splitting (2.8s)
     const t2 = setTimeout(() => {
       setStage("splitting");
       window.dispatchEvent(new CustomEvent("broadnet:intro-splitting"));
-    }, 3200);
+    }, 2800);
 
-    // Stage 3: Split curtains and reveal hero page (3.2s -> 4.4s)
+    // Stage 3 -> Finished (3.9s)
     const t3 = setTimeout(() => {
       setStage("done");
+      setShouldRender(false);
       window.dispatchEvent(new CustomEvent("broadnet:intro-done"));
       onComplete?.();
-    }, 4400);
-
-    const handleReplay = () => {
-      setStage("intro");
-      setHasStarted(true);
-      window.dispatchEvent(new CustomEvent("broadnet:intro-reset"));
-      setTimeout(() => setStage("subtitle"), 1400);
-      setTimeout(() => {
-        setStage("splitting");
-        window.dispatchEvent(new CustomEvent("broadnet:intro-splitting"));
-      }, 3200);
-      setTimeout(() => {
-        setStage("done");
-        window.dispatchEvent(new CustomEvent("broadnet:intro-done"));
-        onComplete?.();
-      }, 4400);
-    };
-
-    window.addEventListener("broadnet:replay-intro", handleReplay);
+    }, 3900);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
-      window.removeEventListener("broadnet:replay-intro", handleReplay);
     };
   }, [onComplete]);
 
@@ -71,7 +76,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
     }
   };
 
-  if (stage === "done") return null;
+  if (!shouldRender || stage === "done") return null;
 
   const letterVariants = {
     hidden: { opacity: 0, y: 35, scale: 0.8 },
@@ -150,10 +155,10 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
                   ? { opacity: 0, x: -80, transition: { duration: 0.6 } }
                   : { opacity: 1, x: 0, transition: { duration: 0.6, delay: 0.1 } }
               }
-              className="absolute right-4 sm:right-10 top-[60%] sm:top-[62%] flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#00C2FF]/30 bg-[#00C2FF]/10 backdrop-blur-md shadow-[0_0_25px_rgba(0,194,255,0.25)] z-10"
+              className="absolute right-2 sm:right-10 top-[60%] sm:top-[62%] flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-[#00C2FF]/30 bg-[#00C2FF]/10 backdrop-blur-md shadow-[0_0_25px_rgba(0,194,255,0.25)] z-10"
             >
-              <Wifi size={16} className="text-[#00C2FF] animate-pulse" />
-              <span className="text-xs sm:text-sm font-bold text-white tracking-wider uppercase font-display whitespace-nowrap">
+              <Wifi size={14} className="sm:w-4 sm:h-4 text-[#00C2FF] animate-pulse flex-shrink-0" />
+              <span className="text-[10px] sm:text-xs md:text-sm font-bold text-white tracking-wider uppercase font-display whitespace-nowrap">
                 Internet Services
               </span>
             </motion.div>
@@ -220,10 +225,10 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
                   ? { opacity: 0, x: 80, transition: { duration: 0.6 } }
                   : { opacity: 1, x: 0, transition: { duration: 0.6, delay: 0.2 } }
               }
-              className="absolute left-4 sm:left-10 top-[60%] sm:top-[62%] flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#EF1313]/35 bg-[#EF1313]/10 backdrop-blur-md shadow-[0_0_25px_rgba(239,19,19,0.25)] z-10"
+              className="absolute left-2 sm:left-10 top-[60%] sm:top-[62%] flex items-center gap-1.5 sm:gap-2.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-[#EF1313]/35 bg-[#EF1313]/10 backdrop-blur-md shadow-[0_0_25px_rgba(239,19,19,0.25)] z-10"
             >
-              <Shield size={16} className="text-[#EF1313] animate-pulse" />
-              <span className="text-xs sm:text-sm font-bold text-white tracking-wider uppercase font-display whitespace-nowrap">
+              <Shield size={14} className="sm:w-4 sm:h-4 text-[#EF1313] animate-pulse flex-shrink-0" />
+              <span className="text-[10px] sm:text-xs md:text-sm font-bold text-white tracking-wider uppercase font-display whitespace-nowrap">
                 Security Systems
               </span>
             </motion.div>
@@ -234,47 +239,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
         <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-[#EF1313] to-transparent shadow-[0_0_25px_#EF1313]" />
       </motion.div>
 
-      {/* ================= GENTLE LIGHT VEIL & FLARE ON SPLIT ================= */}
-      <AnimatePresence>
-        {isSplitting && (
-          <>
-            {/* Gentle ambient white bloom veil to ease contrast into the white hero page */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 0.6, 0] }}
-              transition={{ duration: 1.05, ease: "easeInOut" }}
-              className="absolute inset-0 bg-white pointer-events-none z-10"
-            />
 
-            {/* Soft radiant center energy expansion */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.15 }}
-              animate={{
-                opacity: [0, 0.85, 0],
-                scale: [0.2, 1.4, 3],
-              }}
-              transition={{ duration: 1.1, ease: "easeOut" }}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none z-30"
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(200,225,255,0.5) 30%, rgba(78,13,186,0.15) 60%, transparent 80%)",
-                filter: "blur(20px)",
-              }}
-            />
-
-            {/* Gentle expanding white light beam */}
-            <motion.div
-              initial={{ opacity: 0, scaleX: 1 }}
-              animate={{
-                opacity: [0, 0.9, 0],
-                scaleX: [1, 8, 25],
-              }}
-              transition={{ duration: 0.95, ease: "easeOut" }}
-              className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-6 bg-gradient-to-r from-transparent via-white to-transparent blur-md z-30 pointer-events-none"
-            />
-          </>
-        )}
-      </AnimatePresence>
 
       {/* Skip indicator prompt at bottom */}
       <motion.div

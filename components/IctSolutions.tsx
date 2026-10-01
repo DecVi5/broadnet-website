@@ -2,15 +2,15 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Wifi, Server, Network, Shield, Zap, Globe } from "lucide-react";
+import { Wifi, Server, Network, Shield, Zap, Globe, Tv, Cpu } from "lucide-react";
 
 const SOLUTIONS = [
-  { icon: Globe, title: "Broadnet Fiber Internet", desc: "Own optical fibre network spanning 100+ km in Avadi. Direct connectivity without third-party bottlenecks, guaranteeing consistent speeds." },
-  { icon: Wifi, title: "BSNL FTTH", desc: "Authorised BSNL FTTH partner providing government-backed fiber internet with nationwide backbone connectivity and competitive pricing." },
+  { icon: Globe, title: "Broadnet Private FTTH", desc: "Private optical fiber network across Avadi starting at ₹499/mo with Free Installation & Free ONT. Symmetric speed with zero bottlenecks." },
+  { icon: Tv, title: "Railwire FTTH + OTT", desc: "50–300 Mbps broadband bundled with Amazon Prime Video, 20+ leading OTT apps, and 450+ Live TV channels starting from ₹599/mo." },
+  { icon: Wifi, title: "BSNL Bharat Fibre", desc: "Authorised BSNL FTTH partner providing government-backed fiber internet with nationwide backbone connectivity and competitive pricing." },
+  { icon: Cpu, title: "Dual Band Gigabit ONT", desc: "Netlink Dual-Band 2.4GHz & 5GHz optical ONT router (₹3,500) with 2GE ports + 1POTS for maximum home Wi-Fi range and throughput." },
   { icon: Zap, title: "Grandstream Enterprise Wi-Fi", desc: "High-density Wi-Fi 6 access points with centralized cloud management, seamless roaming, and VLAN segmentation for enterprise environments." },
-  { icon: Network, title: "Structured Cabling", desc: "Cat6A and fiber backbone cabling with certified installation, cable management, and full documentation for future-proof network infrastructure." },
-  { icon: Server, title: "Network Design & Setup", desc: "End-to-end LAN/WAN architecture design, switch configuration, VLAN setup, and QoS policies for optimal network performance." },
-  { icon: Shield, title: "Tactine Firewall & Security", desc: "Next-generation UTM firewall with IPS/IDS, content filtering, VPN gateway, and real-time threat intelligence from Tactine." },
+  { icon: Network, title: "Structured Cabling & Firewalls", desc: "Cat6A/fiber backbone installation, and Tactine next-gen UTM firewalls with IPS/IDS and real-time threat intelligence." },
 ];
 
 export default function IctSolutions() {

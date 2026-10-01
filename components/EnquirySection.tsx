@@ -1,26 +1,25 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Shield, Wifi, Send, CheckCircle, AlertCircle, User, Phone, MapPin, MessageSquare, Mail, ExternalLink } from "lucide-react";
+import { Shield, Wifi, Send, CheckCircle, AlertCircle, User, Phone, MapPin, MessageSquare, Mail, ExternalLink, Copy, Check } from "lucide-react";
 import { SectionLabel } from "./MotionHelpers";
 
 const SECURITY_REQUIREMENTS = [
-  "CCTV Surveillance",
-  "Intrusion Alarm",
-  "Video Door Phone",
-  "Access Control",
+  "CCTV Installation & Services",
+  "Intrusion Alarm System",
+  "Smart Video Door Phone",
+  "Biometric Access Control",
   "Intercom System",
-  "Boom Barrier",
-  "Flap Barrier",
+  "Boom & Flap Barriers",
 ];
 
 const INTERNET_REQUIREMENTS = [
-  "Home Internet",
-  "Business Fiber",
-  "Enterprise Wi-Fi",
+  "Broadnet FTTH Plans",
+  "Railwire FTTH + OTT",
+  "BSNL Bharat Fibre",
+  "Dual Band ONT Upgrade",
+  "Enterprise Wi-Fi 6",
   "Structured Cabling",
-  "Firewall / Security",
-  "BSNL FTTH",
 ];
 
 type FormType = "security" | "internet";
@@ -34,8 +33,116 @@ export default function EnquirySection() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
   const [form, setForm] = useState({ name: "", phone: "", location: "", message: "" });
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleCopyEmail = () => {
+    const email = "admin@broadnet.in";
+    if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).catch(() => {
+        fallbackCopy(email);
+      });
+    } else {
+      fallbackCopy(email);
+    }
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2200);
+  };
+
+  const fallbackCopy = (text: string) => {
+    try {
+      const el = document.createElement("textarea");
+      el.value = text;
+      el.setAttribute("readonly", "");
+      el.style.position = "absolute";
+      el.style.left = "-9999px";
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+    } catch {
+      // ignore fallback error
+    }
+  };
 
   const requirements = formType === "security" ? SECURITY_REQUIREMENTS : INTERNET_REQUIREMENTS;
+
+  useEffect(() => {
+    const handleServiceSelect = (serviceName: string) => {
+      if (!serviceName) return;
+      const lower = serviceName.toLowerCase();
+
+      const isInternet =
+        lower.includes("internet") ||
+        lower.includes("fiber") ||
+        lower.includes("ftth") ||
+        lower.includes("broadnet") ||
+        lower.includes("railwire") ||
+        lower.includes("bsnl") ||
+        lower.includes("ont") ||
+        lower.includes("wi-fi") ||
+        lower.includes("wifi") ||
+        lower.includes("network") ||
+        lower.includes("cabling");
+
+      const type: FormType = isInternet ? "internet" : "security";
+      setFormType(type);
+
+      const targetList = isInternet ? INTERNET_REQUIREMENTS : SECURITY_REQUIREMENTS;
+      const matched = targetList.find(
+        (r) => lower.includes(r.toLowerCase()) || r.toLowerCase().includes(lower)
+      );
+
+      if (matched) {
+        setSelected([matched]);
+      } else if (lower.includes("cctv")) {
+        setSelected(["CCTV Installation & Services"]);
+      } else if (lower.includes("railwire")) {
+        setSelected(["Railwire FTTH + OTT"]);
+      } else if (lower.includes("broadnet")) {
+        setSelected(["Broadnet FTTH Plans"]);
+      } else if (lower.includes("ont")) {
+        setSelected(["Dual Band ONT Upgrade"]);
+      } else if (lower.includes("bsnl")) {
+        setSelected(["BSNL Bharat Fibre"]);
+      } else {
+        setSelected([serviceName]);
+      }
+    };
+
+    const onCustomEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ service: string }>;
+      if (customEvent.detail?.service) {
+        handleServiceSelect(customEvent.detail.service);
+      }
+    };
+
+    const onLocationEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ location: string }>;
+      if (customEvent.detail?.location) {
+        setForm((prev) => ({ ...prev, location: customEvent.detail.location }));
+      }
+    };
+
+    window.addEventListener("broadnet:select-service", onCustomEvent);
+    window.addEventListener("broadnet:set-location", onLocationEvent);
+
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const serviceParam = params.get("service");
+      const locationParam = params.get("location");
+      if (serviceParam) {
+        handleServiceSelect(serviceParam);
+      }
+      if (locationParam) {
+        setForm((prev) => ({ ...prev, location: locationParam }));
+      }
+    }
+
+    return () => {
+      window.removeEventListener("broadnet:select-service", onCustomEvent);
+      window.removeEventListener("broadnet:set-location", onLocationEvent);
+    };
+  }, []);
 
   const toggleReq = (req: string) => {
     setSelected((prev) => prev.includes(req) ? prev.filter((r) => r !== req) : [...prev, req]);
@@ -131,7 +238,7 @@ export default function EnquirySection() {
               <button
                 key={t}
                 onClick={() => { setFormType(t); setSelected([]); }}
-                className={`flex-1 flex items-center justify-center gap-2.5 py-4 text-sm font-semibold transition-all duration-200 ${
+                className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2.5 py-3 sm:py-4 px-2 text-xs sm:text-sm font-semibold transition-all duration-200 ${
                   formType === t
                     ? t === "security"
                       ? "bg-[#EF1313]/5 text-[#EF1313] border-b-2 border-[#EF1313]"
@@ -139,15 +246,15 @@ export default function EnquirySection() {
                     : "text-[#16143E]/40 hover:text-[#16143E]/70"
                 }`}
               >
-                {t === "security" ? <Shield size={16} /> : <Wifi size={16} />}
+                {t === "security" ? <Shield size={15} /> : <Wifi size={15} />}
                 {t === "security" ? "Security Enquiry" : "Internet Enquiry"}
               </button>
             ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="p-8">
+          <form onSubmit={handleSubmit} className="p-5 sm:p-8">
             {/* Name + Phone */}
-            <div className="grid sm:grid-cols-2 gap-5 mb-5">
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 mb-5">
               <div>
                 <label
                   htmlFor="enquiry-name"
@@ -225,14 +332,14 @@ export default function EnquirySection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.2 }}
-                  className="flex flex-wrap gap-2"
+                  className="flex flex-wrap gap-1.5 sm:gap-2"
                 >
                   {requirements.map((req) => (
                     <button
                       key={req}
                       type="button"
                       onClick={() => toggleReq(req)}
-                      className={`px-4 py-2 rounded-full text-xs font-semibold border transition-all duration-150 ${
+                      className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold border transition-all duration-150 ${
                         selected.includes(req)
                           ? formType === "security"
                             ? "bg-[#EF1313] border-[#EF1313] text-white"
@@ -325,9 +432,30 @@ export default function EnquirySection() {
                 )}
               </AnimatePresence>
 
-              <p className="text-xs text-[#16143E]/45 sm:ml-auto">
-                Direct to: <strong className="text-[#16143E]/75">admin@broadnet.in</strong>
-              </p>
+              <button
+                type="button"
+                onClick={handleCopyEmail}
+                title="Click to copy email address"
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs transition-all duration-200 sm:ml-auto group cursor-pointer border ${
+                  copiedEmail
+                    ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-700 font-semibold shadow-sm"
+                    : "text-[#16143E]/55 hover:text-[#16143E] bg-[#16143E]/[0.03] hover:bg-[#16143E]/[0.08] border-[#16143E]/8 hover:border-[#16143E]/18"
+                }`}
+              >
+                {copiedEmail ? (
+                  <>
+                    <Check size={13} className="text-emerald-600" />
+                    <span>Copied to clipboard!</span>
+                  </>
+                ) : (
+                  <>
+                    <span>
+                      Direct to: <strong className="text-[#16143E]/80 group-hover:text-[#16143E]">admin@broadnet.in</strong>
+                    </span>
+                    <Copy size={12} className="opacity-45 group-hover:opacity-100 transition-opacity ml-0.5 text-[#4E0DBA]" />
+                  </>
+                )}
+              </button>
             </div>
           </form>
         </motion.div>

@@ -54,7 +54,7 @@ export default function AboutPage() {
               <div className="flex items-center gap-3">
                 <MapPin size={16} className="text-[#4E0DBA]" />
                 <span className="text-[#16143E]/60 text-sm">
-                  1093, Fire Station Road, TNHB, Avadi, Chennai ? 600 054
+                  1093, Fire Station Road, TNHB, Avadi, Chennai – 600 054
                 </span>
               </div>
             </div>

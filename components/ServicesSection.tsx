@@ -1,47 +1,132 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Shield, Wifi, Camera, Lock, Zap, Network, Server, Radio, BadgeCheck } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { Shield, Wifi, Camera, Lock, Zap, Network, Server, Radio, BadgeCheck, Tv, Globe, Cpu, ArrowRight } from "lucide-react";
 import { SectionLabel } from "./MotionHelpers";
+import { scrollToWithPhysics } from "@/lib/scrollPhysics";
 
 const SECURITY_SERVICES = [
-  { icon: Camera, title: "CCTV Surveillance", desc: "Hikvision & CP PLUS HD/4K IP systems with remote monitoring and AI analytics." },
-  { icon: Shield, title: "Hikvision Intrusion Alarms", desc: "Perimeter detection, motion sensing, and instant alert systems for enterprise premises." },
-  { icon: Zap, title: "Video Door Phones", desc: "Smart access control with HD video intercom and remote door release capability." },
-  { icon: Radio, title: "CCL Intercom Systems", desc: "Building-wide communication infrastructure with multi-station intercom networks." },
-  { icon: Lock, title: "eSSL Access Control", desc: "Biometric, RFID, and mobile-based access management for restricted zones." },
-  { icon: Shield, title: "RFID Boom & Flap Barriers", desc: "Automated vehicle and pedestrian access management with RFID/ANPR integration." },
+  {
+    icon: Camera,
+    title: "CCTV Installation & Services",
+    price: "From ₹1,399",
+    badge: "Official CP PLUS Partner",
+    desc: "HD & 4K IP camera installation, remote live smartphone/PC monitoring setup, and comprehensive AMC maintenance."
+  },
+  {
+    icon: Shield,
+    title: "Hikvision Intrusion Alarms",
+    desc: "Perimeter detection, laser trip sensors, motion detection, and immediate siren & mobile alert systems."
+  },
+  {
+    icon: Zap,
+    title: "Smart Video Door Phones",
+    desc: "High-definition two-way video intercom with night vision and remote electronic door latch release."
+  },
+  {
+    icon: Radio,
+    title: "CCL Multi-Station Intercom",
+    desc: "Building-wide internal communication infrastructure for apartments, gated communities, and corporate offices."
+  },
+  {
+    icon: Lock,
+    title: "eSSL Biometric Access Control",
+    desc: "Fingerprint, facial recognition, RFID card, and PIN-based door access management with audit logs."
+  },
+  {
+    icon: Shield,
+    title: "Automated Boom & Flap Barriers",
+    desc: "Automated parking and pedestrian access barriers with RFID vehicle fast-tag integration."
+  },
 ];
 
 const ICT_SERVICES = [
-  { icon: Wifi, title: "Broadnet Fiber / BSNL FTTH", desc: "High-speed dedicated fiber internet with guaranteed bandwidth for homes and businesses." },
-  { icon: Radio, title: "Grandstream Enterprise Wi-Fi", desc: "High-density wireless networks with centralized management and seamless roaming." },
-  { icon: Network, title: "Structured Cabling", desc: "Cat6A/fiber backbone cabling with professional installation and documentation." },
-  { icon: Server, title: "Tactine Firewall & Security", desc: "Next-gen UTM firewalls with threat intelligence, VPN, and content filtering." },
+  {
+    icon: Wifi,
+    title: "Broadnet Private FTTH Plans",
+    price: "From ₹499/mo",
+    badge: "Free Installation & ONT",
+    desc: "60 to 150 Mbps symmetric private fiber network across Avadi. Zero reseller bottlenecks, truly unlimited."
+  },
+  {
+    icon: Tv,
+    title: "Railwire FTTH & OTT Bundles",
+    price: "From ₹599/mo",
+    badge: "Prime + 20 OTTs Included",
+    desc: "50 to 300 Mbps broadband bundled with Amazon Prime, 20+ top OTT apps, and 450+ Live TV channels."
+  },
+  {
+    icon: Globe,
+    title: "BSNL Bharat Fibre Plans",
+    price: "From ₹499/mo",
+    badge: "Authorized Partner",
+    desc: "Official BSNL FTTH partner offering Bharat Fibre Basic, Plus, and Premium with nationwide backbone reliability."
+  },
+  {
+    icon: Cpu,
+    title: "Dual Band Gigabit ONT Upgrades",
+    price: "₹3,500",
+    badge: "Hardware Upgrade",
+    desc: "Netlink Dual-Band 2.4G & 5G Gigabit fiber router with 2GE + 1POTS for whole-home high-speed coverage."
+  },
+  {
+    icon: Radio,
+    title: "Grandstream Enterprise Wi-Fi",
+    desc: "High-density Wi-Fi 6 wireless access points with centralized cloud dashboard and seamless roaming."
+  },
+  {
+    icon: Network,
+    title: "Structured Cabling & Tactine UTM",
+    desc: "Cat6A/fiber backbone installation, and Tactine next-gen firewalls with VPN & real-time intrusion prevention."
+  },
 ];
 
-function ServiceCard({ icon: Icon, title, desc, index }: {
+function ServiceCard({ icon: Icon, title, desc, price, badge, index }: {
   icon: React.ComponentType<{ size?: number; className?: string }>;
   title: string;
   desc: string;
+  price?: string;
+  badge?: string;
   index: number;
 }) {
+  const handleClick = () => {
+    window.dispatchEvent(new CustomEvent("broadnet:select-service", { detail: { service: title } }));
+    scrollToWithPhysics("enquiry");
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="card-obsidian p-6 group cursor-default"
+      transition={{ delay: index * 0.07, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      onClick={handleClick}
+      className="card-obsidian p-6 group cursor-pointer transition-all duration-300 hover:border-[#4E0DBA]/60 hover:shadow-xl hover:shadow-[#4E0DBA]/10 relative"
+      title={`Click to enquire about ${title}`}
     >
-      <div className="flex items-start gap-4">
-        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#4E0DBA]/20 flex items-center justify-center group-hover:bg-[#4E0DBA]/35 transition-colors duration-300">
-          <Icon size={18} className="text-[#6B2FD4]" />
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <div className="flex items-start gap-3.5">
+          <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-[#4E0DBA]/20 border border-[#4E0DBA]/30 flex items-center justify-center group-hover:bg-[#4E0DBA]/35 group-hover:border-[#4E0DBA]/50 transition-all duration-300">
+            <Icon size={19} className="text-[#A78BFA] group-hover:text-white transition-colors" />
+          </div>
+          <div>
+            <h3 className="text-white font-bold text-base group-hover:text-[#A78BFA] transition-colors flex items-center gap-1.5">
+              <span>{title}</span>
+              <ArrowRight size={13} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#A78BFA]" />
+            </h3>
+            {price && (
+              <span className="inline-block text-xs font-bold text-[#EF1313] bg-[#EF1313]/12 border border-[#EF1313]/25 px-2 py-0.5 rounded-md mt-1">
+                {price}
+              </span>
+            )}
+          </div>
         </div>
-        <div>
-          <h3 className="text-white font-semibold text-base mb-1.5">{title}</h3>
-          <p className="text-white/45 text-sm leading-relaxed">{desc}</p>
-        </div>
+        {badge && (
+          <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-0.5 rounded-full flex-shrink-0">
+            {badge}
+          </span>
+        )}
       </div>
+      <p className="text-white/50 text-sm leading-relaxed pl-[56px] group-hover:text-white/70 transition-colors">{desc}</p>
     </motion.div>
   );
 }

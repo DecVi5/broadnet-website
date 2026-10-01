@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 };
 
 import CustomCursor from "@/components/CustomCursor";
+import MobileStickyBar from "@/components/MobileStickyBar";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <CustomCursor />
         {children}
+        <MobileStickyBar />
       </body>
     </html>
   );

@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EnquirySection from "@/components/EnquirySection";
 import PlansSection from "@/components/PlansSection";
+import LocationChecker from "@/components/LocationChecker";
 import InternetHero from "@/components/InternetHero";
 import IctSolutions from "@/components/IctSolutions";
 
@@ -18,6 +19,7 @@ export default function InternetPage() {
       <main>
         <InternetHero />
         <PlansSection />
+        <LocationChecker />
         <IctSolutions />
         <EnquirySection />
       </main>
