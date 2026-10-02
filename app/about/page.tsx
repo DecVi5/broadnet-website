@@ -5,8 +5,18 @@ import EnquirySection from "@/components/EnquirySection";
 import { Users, Award, MapPin, Clock, TrendingUp, Heart, BadgeCheck } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About Us | Broadnet Internet Services",
-  description: "Learn about Broadnet Internet Services - established 2014 in Avadi, Chennai, delivering fiber internet and security solutions.",
+  title: "About Broadnet | Avadi's Leading Fiber ISP & Security Partner Since 2014",
+  description:
+    "Established in 2014, Broadnet operates 100+ km of private fiber backbone and has completed 2,500+ residential and enterprise security installations across Avadi, Chennai.",
+  alternates: {
+    canonical: "https://www.broadnet.in/about",
+  },
+  openGraph: {
+    title: "About Broadnet Internet Services | 10+ Years in Avadi, Chennai",
+    description:
+      "Avadi's home-grown optical fiber and ELV security infrastructure leader. Serving over 2,500 clients with certified engineering excellence.",
+    url: "https://www.broadnet.in/about",
+  },
 };
 
 const STATS = [
@@ -43,12 +53,12 @@ export default function AboutPage() {
               <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#4E0DBA] mb-4">
                 <span className="w-4 h-px bg-[#4E0DBA]" /> Our Story
               </span>
-              <h1 className="text-5xl md:text-6xl font-bold text-[#16143E] leading-tight mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#16143E] leading-tight mb-4 sm:mb-6">
                 Built in Avadi.
                 <br />
                 <span className="text-gradient">Trusted Across Chennai.</span>
               </h1>
-              <p className="text-[#16143E]/60 text-xl leading-relaxed mb-8">
+              <p className="text-[#16143E]/60 text-base sm:text-lg md:text-xl leading-relaxed mb-6 sm:mb-8">
                 Since 2014, Broadnet Internet Services has been the backbone of connectivity and security for thousands of homes and businesses in Avadi, Tamil Nadu. What started as a local ISP has grown into a full-spectrum technology solutions provider.
               </p>
               <div className="flex items-center gap-3">

@@ -29,7 +29,7 @@ export default function InternetHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="text-5xl md:text-6xl font-bold text-[#16143E] leading-tight mb-6 font-display"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#16143E] leading-tight mb-4 sm:mb-6 font-display"
           >
             100+ km of Your
             <br />
@@ -41,7 +41,7 @@ export default function InternetHero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-            className="text-[#16143E]/60 text-xl leading-relaxed mb-8 max-w-2xl font-body"
+            className="text-[#16143E]/60 text-base sm:text-lg md:text-xl leading-relaxed mb-6 sm:mb-8 max-w-2xl font-body"
           >
             Broadnet operates its own optical fibre backbone across Avadi — delivering symmetric, uncontended internet to homes and enterprises with 99.9% uptime.
           </motion.p>
@@ -51,13 +51,13 @@ export default function InternetHero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-6"
+            className="flex flex-wrap items-center gap-3 sm:gap-6"
           >
             <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-sm font-semibold text-[#16143E]/80">Network Operational</span>
+              <span className="text-xs sm:text-sm font-semibold text-[#16143E]/80">Network Operational</span>
             </div>
-            <div className="text-sm font-medium text-[#16143E]/50">2,500+ active subscribers</div>
+            <div className="text-xs sm:text-sm font-medium text-[#16143E]/50">2,500+ active subscribers</div>
           </motion.div>
         </div>
       </div>

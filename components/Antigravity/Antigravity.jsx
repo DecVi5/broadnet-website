@@ -2,7 +2,7 @@
 
 /* eslint-disable react/no-unknown-property */
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import * as THREE from "three";
 
 const AntigravityInner = ({
@@ -14,7 +14,7 @@ const AntigravityInner = ({
   particleSize = 2,
   lerpSpeed = 0.1,
   color = "#FF9FFC",
-  autoAnimate = false,
+  autoAnimate = true,
   particleVariance = 1,
   rotationSpeed = 0,
   depthFactor = 1,
@@ -26,9 +26,24 @@ const AntigravityInner = ({
   const { viewport } = useThree();
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
+  const elapsedRef = useRef(0);
   const lastMousePos = useRef({ x: 0, y: 0 });
   const lastMouseMoveTime = useRef(0);
   const virtualMouse = useRef({ x: 0, y: 0 });
+  const pointerPos = useRef({ x: 0, y: 0, active: false });
+
+  useEffect(() => {
+    const onPointerMove = (e) => {
+      // Normalize cursor coords to [-1, 1] relative to viewport
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = -(e.clientY / window.innerHeight) * 2 + 1;
+      pointerPos.current = { x, y, active: true };
+      lastMouseMoveTime.current = Date.now();
+    };
+
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onPointerMove);
+  }, []);
 
   const particles = useMemo(() => {
     const temp = [];
@@ -71,11 +86,15 @@ const AntigravityInner = ({
     return temp;
   }, [count, viewport.width, viewport.height]);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const mesh = meshRef.current;
     if (!mesh) return;
 
-    const { viewport: v, pointer: m } = state;
+    elapsedRef.current += Math.min(delta || 0.016, 0.1);
+    const time = elapsedRef.current;
+
+    const { viewport: v, pointer: fallbackPointer } = state;
+    const m = pointerPos.current.active ? pointerPos.current : fallbackPointer;
 
     const mouseDist = Math.sqrt(
       Math.pow(m.x - lastMousePos.current.x, 2) +
@@ -91,7 +110,6 @@ const AntigravityInner = ({
     let destY = (m.y * v.height) / 2;
 
     if (autoAnimate && Date.now() - lastMouseMoveTime.current > 2000) {
-      const time = state.clock.getElapsedTime();
       destX = Math.sin(time * 0.5) * (v.width / 4);
       destY = Math.cos(time * 0.5 * 2) * (v.height / 4);
     }
@@ -103,12 +121,12 @@ const AntigravityInner = ({
     const targetX = virtualMouse.current.x;
     const targetY = virtualMouse.current.y;
 
-    const globalRotation = state.clock.getElapsedTime() * rotationSpeed;
+    const globalRotation = time * rotationSpeed;
 
     particles.forEach((particle, i) => {
-      let { t, speed, mx, my, mz, cz, randomRadiusOffset } = particle;
+      let { speed, mx, my, mz, cz, randomRadiusOffset } = particle;
 
-      t = particle.t += speed / 2;
+      const t = (particle.t += speed / 2);
 
       const projectionFactor = 1 - cz / 50;
       const projectedTargetX = targetX * projectionFactor;
@@ -184,8 +202,19 @@ const AntigravityInner = ({
 
 const Antigravity = (props) => {
   return (
-    <div style={{ width: "100%", height: "100%", position: "relative" }}>
-      <Canvas camera={{ position: [0, 0, 50], fov: 35 }}>
+    <div style={{ width: "100%", height: "100%", position: "relative", touchAction: "pan-y", pointerEvents: "none" }}>
+      <Canvas
+        camera={{ position: [0, 0, 50], fov: 35 }}
+        dpr={[1, 1.5]}
+        gl={{
+          powerPreference: "high-performance",
+          antialias: false,
+          alpha: true,
+          depth: false,
+          stencil: false,
+        }}
+        style={{ pointerEvents: "none", touchAction: "pan-y" }}
+      >
         <AntigravityInner {...props} />
       </Canvas>
     </div>

@@ -110,53 +110,55 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-widest text-[#4E0DBA] mb-5">Contact & Hours</h3>
-            <ul className="space-y-4">
-              <li className="flex gap-3">
-                <MapPin size={15} className="text-[#4E0DBA] mt-1 flex-shrink-0" />
-                <div className="flex flex-col gap-2">
-                  <span className="text-sm text-white/60 leading-relaxed">
-                    1093, Fire Station Road, TNHB,<br />Avadi, Chennai – 600 054
-                  </span>
-                  <a
-                    href="https://www.google.com/maps/dir/?api=1&destination=1093,+Fire+Station+Road,+TNHB,+Avadi,+Chennai,+Tamil+Nadu+600054"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] hover:bg-[#4E0DBA]/25 border border-white/10 hover:border-[#4E0DBA]/50 text-xs font-semibold text-[#00C2FF] hover:text-white transition-all duration-200 w-fit group"
-                    title="Open office directions in Google Maps"
-                  >
-                    <Navigation size={12} className="text-[#00C2FF] group-hover:rotate-45 transition-transform" />
-                    <span>Get Directions</span>
-                    <ArrowUpRight size={11} className="opacity-70 group-hover:opacity-100" />
+            <address className="not-italic">
+              <ul className="space-y-4">
+                <li className="flex gap-3">
+                  <MapPin size={15} className="text-[#4E0DBA] mt-1 flex-shrink-0" />
+                  <div className="flex flex-col gap-2">
+                    <span className="text-sm text-white/60 leading-relaxed">
+                      1093, Fire Station Road, TNHB,<br />Avadi, Chennai – 600 054
+                    </span>
+                    <a
+                      href="https://www.google.com/maps/dir/?api=1&destination=1093,+Fire+Station+Road,+TNHB,+Avadi,+Chennai,+Tamil+Nadu+600054"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] hover:bg-[#4E0DBA]/25 border border-white/10 hover:border-[#4E0DBA]/50 text-xs font-semibold text-[#00C2FF] hover:text-white transition-all duration-200 w-fit group"
+                      title="Open office directions in Google Maps"
+                    >
+                      <Navigation size={12} className="text-[#00C2FF] group-hover:rotate-45 transition-transform" />
+                      <span>Get Directions</span>
+                      <ArrowUpRight size={11} className="opacity-70 group-hover:opacity-100" />
+                    </a>
+                  </div>
+                </li>
+                <li className="flex gap-3">
+                  <Phone size={15} className="text-[#4E0DBA] mt-0.5 flex-shrink-0" />
+                  <div className="flex flex-col gap-1">
+                    <a href="tel:+919884344075" className="text-sm text-white/60 hover:text-white transition-colors">
+                      98843 44075
+                    </a>
+                    <a href="tel:+918681888111" className="text-sm text-white/60 hover:text-white transition-colors">
+                      86818 88111
+                    </a>
+                  </div>
+                </li>
+                <li className="flex gap-3">
+                  <Mail size={15} className="text-[#4E0DBA] mt-0.5 flex-shrink-0" />
+                  <a href="mailto:admin@broadnet.in" className="text-sm text-white/60 hover:text-white transition-colors">
+                    admin@broadnet.in
                   </a>
-                </div>
-              </li>
-              <li className="flex gap-3">
-                <Phone size={15} className="text-[#4E0DBA] mt-0.5 flex-shrink-0" />
-                <div className="flex flex-col gap-1">
-                  <a href="tel:+919884344075" className="text-sm text-white/60 hover:text-white transition-colors">
-                    98843 44075
-                  </a>
-                  <a href="tel:+918681888111" className="text-sm text-white/60 hover:text-white transition-colors">
-                    86818 88111
-                  </a>
-                </div>
-              </li>
-              <li className="flex gap-3">
-                <Mail size={15} className="text-[#4E0DBA] mt-0.5 flex-shrink-0" />
-                <a href="mailto:admin@broadnet.in" className="text-sm text-white/60 hover:text-white transition-colors">
-                  admin@broadnet.in
-                </a>
-              </li>
-              {/* Opening Hours */}
-              <li className="flex gap-3 pt-1 border-t border-white/8">
-                <Clock size={15} className="text-[#4E0DBA] mt-0.5 flex-shrink-0" />
-                <div className="flex flex-col text-xs text-white/60 leading-relaxed">
-                  <span className="font-semibold text-white/85">Opening Hours:</span>
-                  <span>Mon — Sat: 9:00 AM — 7:00 PM</span>
-                  <span className="text-emerald-400 font-medium">Emergency: 24/7 On-Call Support</span>
-                </div>
-              </li>
-            </ul>
+                </li>
+                {/* Opening Hours */}
+                <li className="flex gap-3 pt-1 border-t border-white/8">
+                  <Clock size={15} className="text-[#4E0DBA] mt-0.5 flex-shrink-0" />
+                  <div className="flex flex-col text-xs text-white/60 leading-relaxed">
+                    <span className="font-semibold text-white/85">Opening Hours:</span>
+                    <span>Mon — Sat: 9:00 AM — 7:00 PM</span>
+                    <span className="text-emerald-400 font-medium">Emergency: 24/7 On-Call Support</span>
+                  </div>
+                </li>
+              </ul>
+            </address>
           </div>
         </div>
 

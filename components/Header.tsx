@@ -40,19 +40,18 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
   }, []);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: (typeof NAV_LINKS)[0]) => {
+    setMobileOpen(false);
     if (isHomePage) {
       if (link.targetId === "hero" || link.href === "/") {
         e.preventDefault();
         window.history.pushState(null, "", "/");
         window.scrollTo({ top: 0, behavior: "smooth" });
-        setMobileOpen(false);
         return;
       }
       if (link.targetId && document.getElementById(link.targetId)) {
         e.preventDefault();
         window.history.pushState(null, "", `#${link.targetId}`);
         scrollToWithPhysics(link.targetId);
-        setMobileOpen(false);
         return;
       }
     }
@@ -98,7 +97,6 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
                   height={82}
                   className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
                   priority
-                  loading="eager"
                 />
               </Link>
             </div>
@@ -112,6 +110,7 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
                 <Link
                   key={link.href}
                   href={link.href}
+                  prefetch={true}
                   onClick={(e) => handleNavClick(e, link)}
                   className={`relative px-4 py-1.5 text-sm font-semibold tracking-wide transition-all duration-200 rounded-full group ${
                     activePage === link.label
@@ -172,6 +171,7 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
                   <Link
                     key={link.href}
                     href={link.href}
+                    prefetch={true}
                     onClick={(e) => handleNavClick(e, link)}
                     className={`px-4 py-3 rounded-2xl text-sm font-semibold transition-colors
                       ${activePage === link.label

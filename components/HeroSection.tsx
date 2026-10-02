@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Shield, Wifi, ChevronDown, Star, CheckCircle2 } from "lucide-react";
-import Antigravity from "./Antigravity";
+import dynamic from "next/dynamic";
+const Antigravity = dynamic(() => import("./Antigravity"), { ssr: false });
 import { scrollToWithPhysics } from "@/lib/scrollPhysics";
 
 const METRICS = [
@@ -70,9 +71,9 @@ export default function HeroSection() {
       </div>
 
       {/* 3D Antigravity Particle Field Background */}
-      <div className="absolute inset-0 w-full h-full pointer-events-auto z-0 overflow-hidden select-none">
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden select-none">
         <Antigravity
-          count={500}
+          count={250}
           magnetRadius={6}
           ringRadius={10}
           waveSpeed={0.4}
@@ -80,7 +81,7 @@ export default function HeroSection() {
           particleSize={0.5}
           lerpSpeed={0.07}
           color="#0d00ff"
-          autoAnimate={false}
+          autoAnimate={true}
           particleVariance={3}
           rotationSpeed={0}
           depthFactor={2.1}
@@ -88,6 +89,8 @@ export default function HeroSection() {
           particleShape="capsule"
           fieldStrength={23}
         />
+        {/* Soft radial backdrop to preserve crisp typography readability on mobile & desktop */}
+        <div className="absolute inset-0 bg-white/45 md:bg-white/20 pointer-events-none" />
       </div>
 
       {/* Centered Content Wrapper */}
@@ -106,9 +109,9 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55 }}
-          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3.5 mb-4 sm:mb-5 pointer-events-auto"
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3.5 mb-4 sm:mb-5 pointer-events-auto max-w-full"
         >
-          <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-[#16143E]/4 border border-[#16143E]/10 backdrop-blur-sm shadow-sm">
+          <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-[#16143E]/4 border border-[#16143E]/10 backdrop-blur-sm shadow-sm flex-shrink-0">
             <div className="flex items-center text-[#F59E0B]">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={11} className="fill-[#F59E0B]" />
@@ -118,9 +121,9 @@ export default function HeroSection() {
             <span className="text-[11px] sm:text-xs text-[#16143E]/50">Google Rating</span>
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold text-[#16143E]/70">
+          <div className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold text-[#16143E]/70 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-[#16143E]/[0.02] border border-[#16143E]/6 sm:border-transparent">
             <CheckCircle2 size={13} className="text-[#25D366] flex-shrink-0" />
-            <span>420+ Certified Deployments in Avadi</span>
+            <span className="text-center">420+ Certified Deployments in Avadi</span>
           </div>
         </motion.div>
 
@@ -129,12 +132,12 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.05 }}
-          className="flex items-center justify-center mb-5 sm:mb-6 pointer-events-auto"
+          className="flex items-center justify-center mb-5 sm:mb-6 pointer-events-auto max-w-full px-2"
         >
-          <div className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-[#4E0DBA]/18 bg-[#4E0DBA]/5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4E0DBA] animate-pulse" />
+          <div className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-[#4E0DBA]/18 bg-[#4E0DBA]/5 max-w-full">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#4E0DBA] animate-pulse flex-shrink-0" />
             <span
-              className="text-[11px] sm:text-xs font-semibold text-[#4E0DBA] tracking-wider sm:tracking-widest uppercase font-display"
+              className="text-[10px] sm:text-xs font-semibold text-[#4E0DBA] tracking-wide sm:tracking-widest uppercase font-display text-center leading-tight"
             >
               Avadi · Chennai · Direct Fiber & ELV Partner
             </span>
@@ -146,7 +149,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.1] sm:leading-[1.06] tracking-tight mb-4 sm:mb-6 text-[#16143E] max-w-4xl"
+          className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.12] sm:leading-[1.06] tracking-tight mb-4 sm:mb-6 text-[#16143E] max-w-4xl"
           style={{ fontFamily: "Syne, sans-serif" }}
         >
           Engineered{" "}

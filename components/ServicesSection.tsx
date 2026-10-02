@@ -226,20 +226,20 @@ export default function ServicesSection() {
           </div>
         </div>
 
-        {/* Certifications & Partnerships - Spanning Horizontally */}
+        {/* Certifications & Partnerships - Centered */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.55 }}
-          className="mt-10 p-6 md:p-7 rounded-3xl border border-[#16143E]/10 bg-[#16143E]/[0.02] flex flex-col lg:flex-row lg:items-center justify-between gap-5"
+          className="mt-12 p-6 md:p-7 rounded-3xl border border-[#16143E]/10 bg-[#16143E]/[0.02] max-w-4xl mx-auto w-full flex flex-col items-center justify-center text-center gap-4.5"
         >
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center justify-center gap-2.5">
             <span className="w-2.5 h-2.5 rounded-full bg-[#EF1313] animate-pulse flex-shrink-0" />
-            <p className="text-xs font-bold uppercase tracking-widest text-[#16143E]/60 whitespace-nowrap">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#16143E]/60">
               Certifications & Partnerships
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
             {["Hikvision HCSA", "CP PLUS CSE", "Grandstream Certified", "eSSL Partner", "Tactine Dealer"].map((cert) => (
               <span
                 key={cert}

@@ -5,8 +5,28 @@ import EnquirySection from "@/components/EnquirySection";
 import { Shield, Camera, Lock, Zap, Radio, AlertTriangle, BadgeCheck } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Security & ELV Solutions | Broadnet Internet Services",
-  description: "Hikvision CCTV, CP PLUS cameras, access control, boom barriers, intrusion alarms, and intercom systems in Avadi, Chennai.",
+  title: "CCTV Installation & ELV Security Systems in Avadi, Chennai | Hikvision & CP PLUS Partner",
+  description:
+    "Official Hikvision HCSA and CP PLUS CSE certified CCTV camera installation, smart video door phones, eSSL biometric access control, and automated boom barriers in Avadi, Chennai. Free site inspection.",
+  keywords: [
+    "CCTV installation Avadi",
+    "Hikvision dealer Chennai",
+    "CP PLUS camera Avadi",
+    "CCTV AMC maintenance Chennai",
+    "biometric access control Avadi",
+    "video door phone installation",
+    "intercom system Chennai",
+    "boom barrier dealer Avadi",
+  ],
+  alternates: {
+    canonical: "https://www.broadnet.in/security",
+  },
+  openGraph: {
+    title: "CCTV Installation & Security Systems in Avadi | Broadnet",
+    description:
+      "Certified Hikvision & CP PLUS surveillance, biometric access, and ELV integration with 2-hour technician dispatch in Avadi.",
+    url: "https://www.broadnet.in/security",
+  },
 };
 
 const PRODUCTS = [
@@ -72,21 +92,21 @@ export default function SecurityPage() {
               <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#EF1313] mb-4">
                 <span className="w-4 h-px bg-[#EF1313]" /> Security & ELV Systems
               </span>
-              <h1 className="text-5xl md:text-6xl font-bold text-[#16143E] leading-tight mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#16143E] leading-tight mb-4 sm:mb-6">
                 Intelligent Security.
                 <br />
                 <span className="text-gradient">Zero Compromise.</span>
               </h1>
-              <p className="text-[#16143E]/60 text-xl leading-relaxed mb-8 max-w-2xl">
+              <p className="text-[#16143E]/60 text-base sm:text-lg md:text-xl leading-relaxed mb-6 sm:mb-8 max-w-2xl">
                 Certified Hikvision and CP PLUS solutions engineered for residential complexes, commercial buildings, and industrial facilities across Avadi and Chennai.
               </p>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2 sm:gap-3">
                 {["Hikvision HCSA", "CP PLUS CSE", "eSSL Partner"].map((c) => (
                   <span
                     key={c}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold border border-[#EF1313]/25 text-[#EF1313] bg-[#EF1313]/5"
+                    className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold border border-[#EF1313]/25 text-[#EF1313] bg-[#EF1313]/5"
                   >
-                    <BadgeCheck size={14} className="text-[#EF1313]" />
+                    <BadgeCheck size={14} className="text-[#EF1313] flex-shrink-0" />
                     {c}
                   </span>
                 ))}

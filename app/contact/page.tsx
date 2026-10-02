@@ -5,8 +5,18 @@ import EnquirySection from "@/components/EnquirySection";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Broadnet Internet Services",
-  description: "Get in touch with Broadnet Internet Services. Call 98843 44075 or visit us at Avadi, Chennai.",
+  title: "Contact Broadnet | Office, Support & Technician Dispatch in Avadi",
+  description:
+    "Visit Broadnet at 1093 Fire Station Road, TNHB, Avadi, Chennai 600054 or call 98843 44075 / 86818 88111. 2-hour technician dispatch across Avadi.",
+  alternates: {
+    canonical: "https://www.broadnet.in/contact",
+  },
+  openGraph: {
+    title: "Contact Broadnet Internet Services | Avadi, Chennai",
+    description:
+      "Get in touch with Avadi's dedicated fiber internet and security solutions engineers. Call 98843 44075 or book an on-site consultation.",
+    url: "https://www.broadnet.in/contact",
+  },
 };
 
 const CONTACT_INFO = [
@@ -60,12 +70,12 @@ export default function ContactPage() {
             <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#4E0DBA] mb-4">
               <span className="w-4 h-px bg-[#4E0DBA]" /> Get In Touch
             </span>
-            <h1 className="text-5xl md:text-6xl font-bold text-[#16143E] mb-5">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#16143E] mb-4 sm:mb-5">
               Let&apos;s Build Something
               <br />
               <span className="text-gradient">Extraordinary Together.</span>
             </h1>
-            <p className="text-[#16143E]/55 text-xl max-w-xl mx-auto">
+            <p className="text-[#16143E]/55 text-base sm:text-lg md:text-xl max-w-xl mx-auto">
               Our engineers respond within 2 hours. On-site visits typically scheduled within 24 hours.
             </p>
           </div>
