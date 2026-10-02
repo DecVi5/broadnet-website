@@ -25,6 +25,20 @@ export function scrollToWithPhysics(
   // Dispatch scroll start event
   window.dispatchEvent(new CustomEvent("broadnet:scroll-start", { detail: { targetId: id } }));
 
+  // If Lenis is active, use its motion-graphic easing
+  const lenis = (window as unknown as { lenis?: { scrollTo: (target: HTMLElement, opts: Record<string, unknown>) => void } }).lenis;
+  if (lenis) {
+    lenis.scrollTo(targetEl, {
+      offset: -(options?.offset ?? 88),
+      duration: 1.35,
+      onComplete: () => {
+        triggerArrivalAnimation(targetEl, id);
+        options?.onArrival?.();
+      },
+    });
+    return;
+  }
+
   // If already at position
   if (Math.abs(distance) < 8) {
     triggerArrivalAnimation(targetEl, id);

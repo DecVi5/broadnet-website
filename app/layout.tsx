@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.broadnet.in"),
@@ -146,7 +147,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -160,9 +161,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <CustomCursor />
-        {children}
-        <MobileStickyBar />
+        <SmoothScrollProvider>
+          <CustomCursor />
+          {children}
+          <MobileStickyBar />
+        </SmoothScrollProvider>
       </body>
     </html>
   );
