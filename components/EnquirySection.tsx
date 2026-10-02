@@ -70,6 +70,7 @@ export default function EnquirySection() {
     phone: string;
     enquiryType: string;
     requirements: string[];
+    referenceId?: string;
   } | null>(null);
 
   const [form, setForm] = useState<FormState>({
@@ -350,6 +351,7 @@ export default function EnquirySection() {
         phone: form.phone.trim(),
         enquiryType: payload.enquiryType,
         requirements: selected,
+        referenceId: data.referenceId,
       });
 
       setStatus("success");
@@ -483,6 +485,19 @@ export default function EnquirySection() {
                     <span className="font-semibold text-[#4E0DBA]">{submittedData.requirements.join(", ")}</span>
                   </div>
                 )}
+              </div>
+
+              {/* Next Steps Card */}
+              <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-4 max-w-lg mx-auto mb-6 text-left text-xs">
+                <div className="font-bold text-[#16143E] mb-2 flex items-center gap-1.5">
+                  <CheckCircle size={14} className="text-emerald-600" />
+                  <span>What Happens Next:</span>
+                </div>
+                <ol className="space-y-1.5 text-[#16143E]/80 list-decimal pl-4 leading-relaxed">
+                  <li>Our Avadi technical desk has logged your enquiry with Reference ID: <strong className="font-mono text-[#EF1313]">{submittedData.referenceId}</strong>.</li>
+                  <li>A technician from our Fire Station Road office will call you at <strong className="text-[#16143E]">{submittedData.phone}</strong> within 30–60 minutes.</li>
+                  <li>We confirm port feasibility and schedule your doorstep setup or site survey at your convenience.</li>
+                </ol>
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -848,6 +863,39 @@ export default function EnquirySection() {
                     </>
                   )}
                 </button>
+              </div>
+
+              {/* What Happens Next Timeline */}
+              <div className="mt-8 pt-6 border-t border-[#16143E]/10">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#16143E]/55 block mb-3 font-display">
+                  What happens after you submit:
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                  <div className="flex items-start gap-2.5 bg-[#16143E]/[0.02] p-3 rounded-xl border border-[#16143E]/6">
+                    <span className="w-5 h-5 rounded-full bg-[#EF1313]/10 text-[#EF1313] font-bold flex items-center justify-center flex-shrink-0 text-[10px]">
+                      1
+                    </span>
+                    <span className="text-[#16143E]/75 leading-snug">
+                      Unique reference ID logged immediately
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-2.5 bg-[#16143E]/[0.02] p-3 rounded-xl border border-[#16143E]/6">
+                    <span className="w-5 h-5 rounded-full bg-[#4E0DBA]/10 text-[#4E0DBA] font-bold flex items-center justify-center flex-shrink-0 text-[10px]">
+                      2
+                    </span>
+                    <span className="text-[#16143E]/75 leading-snug">
+                      Avadi technician verifies port & calls within 30–60 mins
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-2.5 bg-[#16143E]/[0.02] p-3 rounded-xl border border-[#16143E]/6">
+                    <span className="w-5 h-5 rounded-full bg-emerald-500/10 text-emerald-700 font-bold flex items-center justify-center flex-shrink-0 text-[10px]">
+                      3
+                    </span>
+                    <span className="text-[#16143E]/75 leading-snug">
+                      Doorstep setup or on-site survey scheduled at your convenience
+                    </span>
+                  </div>
+                </div>
               </div>
             </form>
           )}
