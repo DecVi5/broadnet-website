@@ -68,18 +68,41 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
 
   return (
     <>
-      {/* ── Main header bar with Glassmorphism ── */}
+      {/* ── Main header bar with Glassmorphism & Animated Optical Background ── */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled ? "glass-header-scrolled" : "glass-header"
         }`}
         style={{ overflow: "visible" }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6" style={{ overflow: "visible" }}>
-          <div className="flex items-center h-16 gap-4" style={{ overflow: "visible" }}>
+        {/* Dynamic Background Effect Layers */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Subtle Top Spectrum Accent Line */}
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#4E0DBA]/40 to-transparent" />
 
-            {/* Left: Logo */}
-            <div className="flex-shrink-0 cursor-pointer group flex items-center">
+          {/* Ambient Luminous Aurora Orbs */}
+          <div className="absolute -top-6 left-[15%] w-96 h-28 bg-gradient-to-r from-[#4E0DBA] via-[#7B2FF7] to-[#4E0DBA] blur-2xl rounded-full opacity-35 aurora-pulse-violet" />
+          <div className="absolute -top-6 right-[18%] w-80 h-28 bg-gradient-to-l from-[#EF1313] via-[#FF4D4D] to-[#EF1313] blur-2xl rounded-full opacity-30 aurora-pulse-crimson" />
+          <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-[520px] h-20 bg-gradient-to-r from-transparent via-[#4E0DBA]/25 to-transparent blur-xl rounded-full opacity-40" />
+
+          {/* Micro High-Tech Dot Matrix Grid */}
+          <div
+            className="absolute inset-0 opacity-[0.045]"
+            style={{
+              backgroundImage: "radial-gradient(circle at 1px 1px, #4E0DBA 1.2px, transparent 0)",
+              backgroundSize: "20px 20px",
+            }}
+          />
+
+          {/* Optical Fiber Traveling Laser Beam at Bottom */}
+          <div className="header-fiber-border" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6" style={{ overflow: "visible" }}>
+          <div className="flex items-center h-16 gap-3 sm:gap-4" style={{ overflow: "visible" }}>
+
+            {/* Left: Logo & Live NOC Status */}
+            <div className="flex items-center gap-3">
               <Link
                 href="/"
                 onClick={(e) => {
@@ -89,52 +112,72 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
+                className="flex-shrink-0 cursor-pointer group flex items-center"
               >
                 <Image
                   src="/assets/logo.png"
                   alt="Broadnet Internet & Security Services Logo"
                   width={200}
                   height={82}
-                  className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
+                  className="h-10 w-auto object-contain transition-transform group-hover:scale-105 drop-shadow-xs"
                   priority
                 />
               </Link>
+
+              {/* High-Tech NOC Status Indicator */}
+              <div className="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#16143E]/[0.04] border border-[#16143E]/10 backdrop-blur-sm text-[10px] font-bold text-[#16143E]/80 tracking-wide font-display">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
+                <span className="text-[#16143E]/60 font-semibold">Avadi Grid:</span>
+                <span className="text-emerald-700 font-extrabold">Active</span>
+              </div>
             </div>
 
             {/* Spacer */}
             <div className="flex-1" />
 
-            {/* Center: Nav links */}
-            <nav className="hidden md:flex items-center gap-1 bg-[#16143E]/[0.03] p-1 rounded-full border border-white/40 backdrop-blur-sm">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  prefetch={true}
-                  onClick={(e) => handleNavClick(e, link)}
-                  className={`relative px-4 py-1.5 text-sm font-semibold tracking-wide transition-all duration-200 rounded-full group ${
-                    activePage === link.label
-                      ? "text-[#4E0DBA] bg-white shadow-sm"
-                      : "text-[#16143E]/70 hover:text-[#16143E] hover:bg-white/60"
-                  }`}
-                  style={{ fontFamily: "Syne, sans-serif" }}
-                >
-                  {link.label}
-                  <span
-                    className={`absolute bottom-1 left-4 right-4 h-0.5 rounded-full bg-[#4E0DBA] transition-transform duration-200 origin-left ${
-                      activePage === link.label ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+            {/* Center: Nav links island */}
+            <nav className="hidden md:flex items-center gap-1 bg-[#16143E]/[0.06] hover:bg-[#16143E]/[0.08] p-1.5 rounded-full border border-[#16143E]/12 shadow-[inset_0_2px_4px_rgba(22,20,62,0.05),0_4px_16px_rgba(78,13,186,0.06)] backdrop-blur-md transition-all">
+              {NAV_LINKS.map((link) => {
+                const isActive = activePage === link.label;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    prefetch={true}
+                    onClick={(e) => handleNavClick(e, link)}
+                    className={`relative px-4 py-1.5 text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 rounded-full flex items-center gap-1.5 ${
+                      isActive
+                        ? "text-[#4E0DBA] bg-white shadow-sm shadow-[#4E0DBA]/20 border border-[#4E0DBA]/20"
+                        : "text-[#16143E]/75 hover:text-[#16143E] hover:bg-white/70"
                     }`}
-                  />
-                </Link>
-              ))}
+                    style={{ fontFamily: "Syne, sans-serif" }}
+                  >
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#4E0DBA] inline-block animate-pulse" />
+                    )}
+                    <span>{link.label}</span>
+                  </Link>
+                );
+              })}
             </nav>
 
-            {/* CTA */}
-            <div className="hidden md:flex items-center">
+            {/* Right: Direct Phone & CTA */}
+            <div className="hidden md:flex items-center gap-2.5">
+              <a
+                href="tel:9884344075"
+                className="hidden xl:inline-flex items-center gap-1.5 text-xs font-bold text-[#16143E]/80 hover:text-[#EF1313] transition-colors py-2 px-3.5 rounded-full border border-[#16143E]/12 hover:border-[#EF1313]/30 bg-white/70 hover:bg-white backdrop-blur-sm shadow-xs font-display"
+              >
+                <Phone size={12} className="text-[#EF1313]" />
+                <span>98843 44075</span>
+              </a>
+
               <Link
                 href="/contact"
                 onClick={handleEnquiryClick}
-                className="btn-crimson"
+                className="btn-crimson shadow-md shadow-[#EF1313]/25 hover:shadow-lg hover:shadow-[#EF1313]/40 text-xs sm:text-sm"
                 style={{ fontFamily: "Syne, sans-serif" }}
               >
                 Request Enquiry
