@@ -426,7 +426,7 @@ export default function EnquirySection() {
   )}`;
 
   return (
-    <section ref={ref} id="enquiry" className="py-24 sm:py-28 bg-white relative overflow-hidden scroll-mt-24">
+    <section ref={ref} className="py-8 sm:py-10 bg-white relative overflow-hidden">
       <div
         className="absolute inset-0 opacity-[0.015]"
         style={{
@@ -435,31 +435,35 @@ export default function EnquirySection() {
         }}
       />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6">
-        {/* Header */}
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
+        {/* Concise Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 sm:mb-14"
+          transition={{ duration: 0.4 }}
+          className="text-center mb-3 sm:mb-4"
         >
-          <SectionLabel>Enquiry Hub</SectionLabel>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#16143E] mt-2 mb-3">
-            Start Your <span className="text-gradient">Project</span>
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#EF1313] font-display">
+            Direct Technician Dispatch · Avadi & Chennai
+          </span>
+          <h2 className="text-xl sm:text-2xl font-extrabold text-[#16143E] mt-0.5 mb-1 font-display">
+            Quick Enquiry & Site Feasibility
           </h2>
-          <p className="text-sm sm:text-base text-[#16143E]/60 max-w-xl mx-auto">
-            Direct local technicians dispatched across Avadi & Chennai. Get a free on-site survey and same-day quote.
+          <p className="text-xs text-[#16143E]/65 max-w-lg mx-auto">
+            Get a same-day quotation and free on-site survey scheduled at your convenience.
           </p>
         </motion.div>
 
+        {/* The Form Card with id="enquiry" so CTA clicks frame the complete form on screen */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          id="enquiry"
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.65, delay: 0.15 }}
-          className="bg-white border border-[#16143E]/10 rounded-3xl shadow-2xl shadow-[#16143E]/5 overflow-hidden"
+          transition={{ duration: 0.4, delay: 0.08 }}
+          className="bg-white border border-[#16143E]/12 rounded-2xl sm:rounded-3xl shadow-xl shadow-[#16143E]/6 overflow-hidden scroll-mt-20"
         >
           {/* Toggle Pillars */}
-          <div className="flex border-b border-[#16143E]/10">
+          <div className="flex border-b border-[#16143E]/10 bg-[#16143E]/[0.02]">
             {(["security", "internet"] as FormType[]).map((t) => (
               <button
                 key={t}
@@ -468,15 +472,15 @@ export default function EnquirySection() {
                   setFormType(t);
                   setSelected([]);
                 }}
-                className={`flex-1 min-h-[48px] flex items-center justify-center gap-2 py-3.5 px-3 text-xs sm:text-sm font-bold transition-all duration-200 ${
+                className={`flex-1 min-h-[42px] flex items-center justify-center gap-2 py-2.5 px-3 text-xs sm:text-sm font-bold transition-all duration-200 ${
                   formType === t
                     ? t === "security"
-                      ? "bg-[#EF1313]/8 text-[#EF1313] border-b-2 border-[#EF1313]"
-                      : "bg-[#4E0DBA]/8 text-[#4E0DBA] border-b-2 border-[#4E0DBA]"
-                    : "text-[#16143E]/50 hover:text-[#16143E] hover:bg-[#16143E]/[0.02]"
+                      ? "bg-white text-[#EF1313] border-b-2 border-[#EF1313] shadow-sm"
+                      : "bg-white text-[#4E0DBA] border-b-2 border-[#4E0DBA] shadow-sm"
+                    : "text-[#16143E]/55 hover:text-[#16143E] hover:bg-white/40"
                 }`}
               >
-                {t === "security" ? <Shield size={16} /> : <Wifi size={16} />}
+                {t === "security" ? <Shield size={15} /> : <Wifi size={15} />}
                 <span>{t === "security" ? "Security & ELV Systems" : "Fiber Internet & FTTH"}</span>
               </button>
             ))}
@@ -557,7 +561,7 @@ export default function EnquirySection() {
               )}
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} noValidate className="p-5 sm:p-8">
+            <form onSubmit={handleSubmit} noValidate className="p-4 sm:p-5">
               {/* Retryable Error Alert Box */}
               <AnimatePresence>
                 {status === "error" && (
@@ -565,10 +569,10 @@ export default function EnquirySection() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/25 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-red-800 text-xs sm:text-sm"
+                    className="mb-4 p-3.5 rounded-xl bg-red-500/10 border border-red-500/25 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-red-800 text-xs"
                   >
                     <div className="flex items-start gap-2.5">
-                      <AlertCircle size={18} className="text-[#EF1313] mt-0.5 flex-shrink-0" />
+                      <AlertCircle size={16} className="text-[#EF1313] mt-0.5 flex-shrink-0" />
                       <div>
                         <strong className="font-bold">Submission Notice: </strong>
                         <span>{serverErrorMessage || "Unable to send enquiry online right now. You can retry or contact us directly below."}</span>
@@ -577,9 +581,9 @@ export default function EnquirySection() {
                     <div className="flex items-center gap-2 w-full sm:w-auto flex-shrink-0">
                       <button
                         type="submit"
-                        className="px-4 py-2.5 min-h-[44px] rounded-lg bg-[#EF1313] text-white font-bold text-xs hover:bg-[#d00e0e] transition-all flex items-center justify-center gap-1.5 w-full sm:w-auto shadow-md"
+                        className="px-3.5 py-2 min-h-[40px] rounded-lg bg-[#EF1313] text-white font-bold text-xs hover:bg-[#d00e0e] transition-all flex items-center justify-center gap-1.5 w-full sm:w-auto shadow-md"
                       >
-                        <RefreshCw size={14} /> Retry Submission
+                        <RefreshCw size={13} /> Retry
                       </button>
                     </div>
                   </motion.div>
@@ -587,18 +591,18 @@ export default function EnquirySection() {
               </AnimatePresence>
 
               {/* Name + Phone */}
-              <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 mb-5">
+              <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 mb-2.5">
                 <div>
                   <label
                     htmlFor="enquiry-name"
-                    className="block text-xs font-bold uppercase tracking-wider text-[#16143E]/75 mb-2"
+                    className="block text-[11px] font-bold uppercase tracking-wider text-[#16143E]/75 mb-1"
                   >
                     Full Name <span className="text-[#EF1313]">*</span>
                   </label>
                   <div className="relative">
                     <User
-                      size={16}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[#16143E]/35 pointer-events-none"
+                      size={15}
+                      className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#16143E]/35 pointer-events-none"
                     />
                     <input
                       id="enquiry-name"
@@ -612,14 +616,14 @@ export default function EnquirySection() {
                       placeholder="e.g. Senthil Kumar"
                       aria-invalid={!!errors.name}
                       aria-describedby={errors.name ? "enquiry-name-error" : undefined}
-                      className={`input-field input-field-icon min-h-[44px] ${
+                      className={`input-field input-field-icon input-field-compact min-h-[40px] ${
                         errors.name ? "border-[#EF1313] focus:border-[#EF1313] focus:ring-[#EF1313]/20" : ""
                       }`}
                     />
                   </div>
                   {errors.name && (
-                    <p id="enquiry-name-error" className="mt-1.5 text-xs text-[#EF1313] flex items-center gap-1 font-medium">
-                      <AlertCircle size={12} className="flex-shrink-0" />
+                    <p id="enquiry-name-error" className="mt-1 text-[11px] text-[#EF1313] flex items-center gap-1 font-medium">
+                      <AlertCircle size={11} className="flex-shrink-0" />
                       {errors.name}
                     </p>
                   )}
@@ -628,14 +632,14 @@ export default function EnquirySection() {
                 <div>
                   <label
                     htmlFor="enquiry-phone"
-                    className="block text-xs font-bold uppercase tracking-wider text-[#16143E]/75 mb-2"
+                    className="block text-[11px] font-bold uppercase tracking-wider text-[#16143E]/75 mb-1"
                   >
                     Phone Number <span className="text-[#EF1313]">*</span>
                   </label>
                   <div className="relative">
                     <Phone
-                      size={16}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[#16143E]/35 pointer-events-none"
+                      size={15}
+                      className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#16143E]/35 pointer-events-none"
                     />
                     <input
                       id="enquiry-phone"
@@ -649,14 +653,14 @@ export default function EnquirySection() {
                       placeholder="e.g. 98843 44075"
                       aria-invalid={!!errors.phone}
                       aria-describedby={errors.phone ? "enquiry-phone-error" : undefined}
-                      className={`input-field input-field-icon min-h-[44px] ${
+                      className={`input-field input-field-icon input-field-compact min-h-[40px] ${
                         errors.phone ? "border-[#EF1313] focus:border-[#EF1313] focus:ring-[#EF1313]/20" : ""
                       }`}
                     />
                   </div>
                   {errors.phone && (
-                    <p id="enquiry-phone-error" className="mt-1.5 text-xs text-[#EF1313] flex items-center gap-1 font-medium">
-                      <AlertCircle size={12} className="flex-shrink-0" />
+                    <p id="enquiry-phone-error" className="mt-1 text-[11px] text-[#EF1313] flex items-center gap-1 font-medium">
+                      <AlertCircle size={11} className="flex-shrink-0" />
                       {errors.phone}
                     </p>
                   )}
@@ -664,21 +668,21 @@ export default function EnquirySection() {
               </div>
 
               {/* Email + Location */}
-              <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 mb-5">
+              <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 mb-2.5">
                 <div>
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center justify-between mb-1">
                     <label
                       htmlFor="enquiry-email"
-                      className="block text-xs font-bold uppercase tracking-wider text-[#16143E]/75"
+                      className="block text-[11px] font-bold uppercase tracking-wider text-[#16143E]/75"
                     >
                       Email Address
                     </label>
-                    <span className="text-[11px] text-[#16143E]/45">Optional (for quotation copy)</span>
+                    <span className="text-[10px] text-[#16143E]/45">Optional</span>
                   </div>
                   <div className="relative">
                     <Mail
-                      size={16}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[#16143E]/35 pointer-events-none"
+                      size={15}
+                      className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#16143E]/35 pointer-events-none"
                     />
                     <input
                       id="enquiry-email"
@@ -691,33 +695,33 @@ export default function EnquirySection() {
                       placeholder="e.g. contact@example.com"
                       aria-invalid={!!errors.email}
                       aria-describedby={errors.email ? "enquiry-email-error" : undefined}
-                      className={`input-field input-field-icon min-h-[44px] ${
+                      className={`input-field input-field-icon input-field-compact min-h-[40px] ${
                         errors.email ? "border-[#EF1313] focus:border-[#EF1313] focus:ring-[#EF1313]/20" : ""
                       }`}
                     />
                   </div>
                   {errors.email && (
-                    <p id="enquiry-email-error" className="mt-1.5 text-xs text-[#EF1313] flex items-center gap-1 font-medium">
-                      <AlertCircle size={12} className="flex-shrink-0" />
+                    <p id="enquiry-email-error" className="mt-1 text-[11px] text-[#EF1313] flex items-center gap-1 font-medium">
+                      <AlertCircle size={11} className="flex-shrink-0" />
                       {errors.email}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center justify-between mb-1">
                     <label
                       htmlFor="enquiry-location"
-                      className="block text-xs font-bold uppercase tracking-wider text-[#16143E]/75"
+                      className="block text-[11px] font-bold uppercase tracking-wider text-[#16143E]/75"
                     >
                       Location / Area
                     </label>
-                    <span className="text-[11px] text-[#16143E]/45">Avadi & Chennai</span>
+                    <span className="text-[10px] text-[#16143E]/45">Avadi & Chennai</span>
                   </div>
                   <div className="relative">
                     <MapPin
-                      size={16}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-[#16143E]/35 pointer-events-none"
+                      size={15}
+                      className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#16143E]/35 pointer-events-none"
                     />
                     <input
                       id="enquiry-location"
@@ -730,14 +734,14 @@ export default function EnquirySection() {
                       placeholder="e.g. TNHB Avadi, 600054"
                       aria-invalid={!!errors.location}
                       aria-describedby={errors.location ? "enquiry-location-error" : undefined}
-                      className={`input-field input-field-icon min-h-[44px] ${
+                      className={`input-field input-field-icon input-field-compact min-h-[40px] ${
                         errors.location ? "border-[#EF1313] focus:border-[#EF1313] focus:ring-[#EF1313]/20" : ""
                       }`}
                     />
                   </div>
                   {errors.location && (
-                    <p id="enquiry-location-error" className="mt-1.5 text-xs text-[#EF1313] flex items-center gap-1 font-medium">
-                      <AlertCircle size={12} className="flex-shrink-0" />
+                    <p id="enquiry-location-error" className="mt-1 text-[11px] text-[#EF1313] flex items-center gap-1 font-medium">
+                      <AlertCircle size={11} className="flex-shrink-0" />
                       {errors.location}
                     </p>
                   )}
@@ -745,21 +749,21 @@ export default function EnquirySection() {
               </div>
 
               {/* Requirements Chips */}
-              <div className="mb-5">
-                <div className="flex items-center justify-between mb-2.5">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#16143E]/75">
+              <div className="mb-2.5">
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#16143E]/75">
                     Select Requirements
                   </label>
-                  <span className="text-[11px] text-[#16143E]/45">Select all that apply</span>
+                  <span className="text-[10px] text-[#16143E]/45">Select all that apply</span>
                 </div>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={formType}
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex flex-wrap gap-2"
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.15 }}
+                    className="flex flex-wrap gap-1.5"
                   >
                     {requirements.map((req) => {
                       const isSelected = selected.includes(req);
@@ -769,7 +773,7 @@ export default function EnquirySection() {
                           type="button"
                           onClick={() => toggleReq(req)}
                           aria-pressed={isSelected}
-                          className={`min-h-[44px] px-4 py-2 rounded-full text-xs font-semibold border transition-all duration-150 flex items-center justify-center ${
+                          className={`min-h-[34px] px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-150 flex items-center justify-center ${
                             isSelected
                               ? formType === "security"
                                 ? "bg-[#EF1313] border-[#EF1313] text-white shadow-sm"
@@ -786,20 +790,20 @@ export default function EnquirySection() {
               </div>
 
               {/* Message */}
-              <div className="mb-7">
-                <div className="flex items-center justify-between mb-2">
+              <div className="mb-3">
+                <div className="flex items-center justify-between mb-1">
                   <label
                     htmlFor="enquiry-message"
-                    className="block text-xs font-bold uppercase tracking-wider text-[#16143E]/75"
+                    className="block text-[11px] font-bold uppercase tracking-wider text-[#16143E]/75"
                   >
                     Requirement Details / Notes
                   </label>
-                  <span className="text-[11px] text-[#16143E]/45">{form.message.length}/800</span>
+                  <span className="text-[10px] text-[#16143E]/45">{form.message.length}/800</span>
                 </div>
                 <div className="relative">
                   <MessageSquare
-                    size={16}
-                    className="absolute left-4 top-4 text-[#16143E]/35 pointer-events-none"
+                    size={15}
+                    className="absolute left-3.5 top-2.5 text-[#16143E]/35 pointer-events-none"
                   />
                   <textarea
                     id="enquiry-message"
@@ -807,35 +811,35 @@ export default function EnquirySection() {
                     value={form.message}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    rows={4}
+                    rows={2}
                     maxLength={800}
-                    placeholder="Describe your property, camera count, fiber speed requirement, or any specific installation timeline..."
+                    placeholder="Describe your property, camera count, fiber speed requirement, or installation timeline..."
                     aria-invalid={!!errors.message}
                     aria-describedby={errors.message ? "enquiry-message-error" : undefined}
-                    className={`input-field input-field-icon resize-none ${
+                    className={`input-field input-field-icon input-field-compact resize-none ${
                       errors.message ? "border-[#EF1313] focus:border-[#EF1313] focus:ring-[#EF1313]/20" : ""
                     }`}
                   />
                 </div>
                 {errors.message && (
-                  <p id="enquiry-message-error" className="mt-1.5 text-xs text-[#EF1313] flex items-center gap-1 font-medium">
-                    <AlertCircle size={12} className="flex-shrink-0" />
+                  <p id="enquiry-message-error" className="mt-1 text-[11px] text-[#EF1313] flex items-center gap-1 font-medium">
+                    <AlertCircle size={11} className="flex-shrink-0" />
                     {errors.message}
                   </p>
                 )}
               </div>
 
-              {/* Submit & Secondary Options */}
-              <div className="flex flex-col sm:flex-row items-center gap-3.5 flex-wrap">
+              {/* Submit & Quick Contact Actions */}
+              <div className="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3 flex-wrap">
                 <motion.button
                   type="submit"
                   disabled={status === "sending"}
                   whileHover={{ scale: status === "sending" ? 1 : 1.02 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 450, damping: 24 }}
-                  className="relative overflow-hidden btn-crimson min-h-[50px] min-w-[210px] w-full sm:w-auto justify-center disabled:cursor-not-allowed shadow-xl shadow-[#EF1313]/30"
+                  className="relative overflow-hidden btn-crimson min-h-[44px] min-w-[200px] w-full sm:w-auto justify-center disabled:cursor-not-allowed shadow-lg shadow-[#EF1313]/30"
                 >
-                  {/* Gentle transmitting light sweep across button */}
+                  {/* Transmitting light sweep across button */}
                   {status === "sending" && (
                     <motion.div
                       initial={{ x: "-100%" }}
@@ -853,15 +857,14 @@ export default function EnquirySection() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -6 }}
                         transition={{ duration: 0.2 }}
-                        className="flex items-center justify-center gap-2.5"
+                        className="flex items-center justify-center gap-2"
                       >
                         {/* Flying Message Motion Graphic */}
-                        <div className="relative w-5 h-5 flex items-center justify-center">
-                          {/* Signal transmission pulse rings */}
+                        <div className="relative w-4 h-4 flex items-center justify-center">
                           <motion.span
                             animate={{ scale: [0.8, 1.8], opacity: [0.8, 0] }}
                             transition={{ repeat: Infinity, duration: 0.9, ease: "easeOut" }}
-                            className="absolute w-4 h-4 rounded-full border border-white/60"
+                            className="absolute w-3.5 h-3.5 rounded-full border border-white/60"
                           />
                           <motion.div
                             animate={{
@@ -872,10 +875,10 @@ export default function EnquirySection() {
                             }}
                             transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
                           >
-                            <Send size={15} className="text-white fill-white/25" />
+                            <Send size={14} className="text-white fill-white/25" />
                           </motion.div>
                         </div>
-                        <span className="font-bold text-xs sm:text-sm tracking-wide">
+                        <span className="font-bold text-xs tracking-wide">
                           Dispatching Message...
                         </span>
                       </motion.div>
@@ -886,13 +889,13 @@ export default function EnquirySection() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -6 }}
                         transition={{ duration: 0.2 }}
-                        className="flex items-center justify-center gap-2 group-hover:gap-2.5 transition-all"
+                        className="flex items-center justify-center gap-2 group-hover:gap-2.5 transition-all text-xs sm:text-sm"
                       >
                         <motion.span
                           whileHover={{ x: 2, y: -2 }}
                           transition={{ type: "spring", stiffness: 400, damping: 20 }}
                         >
-                          <Send size={15} />
+                          <Send size={14} />
                         </motion.span>
                         <span>Send Enquiry</span>
                       </motion.div>
@@ -904,77 +907,22 @@ export default function EnquirySection() {
                   href={whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="min-h-[48px] px-5 py-3 rounded-full font-bold text-xs bg-[#25D366]/10 text-emerald-800 hover:bg-[#25D366]/20 border border-[#25D366]/30 flex items-center justify-center gap-2 transition-all w-full sm:w-auto"
+                  className="min-h-[44px] px-4 py-2 rounded-full font-bold text-xs bg-[#25D366]/10 text-emerald-800 hover:bg-[#25D366]/20 border border-[#25D366]/30 flex items-center justify-center gap-1.5 transition-all w-full sm:w-auto"
                 >
-                  <MessageCircle size={15} className="text-[#25D366]" />
-                  <span>Enquire via WhatsApp</span>
+                  <MessageCircle size={14} className="text-[#25D366]" />
+                  <span>WhatsApp</span>
                 </a>
 
-                <button
-                  type="button"
-                  onClick={handleMailtoDirect}
-                  title="Compose and send directly to admin@broadnet.in using your default mail app"
-                  className="min-h-[48px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-xs font-semibold text-[#16143E]/70 hover:text-[#16143E] border border-[#16143E]/15 hover:border-[#16143E]/30 bg-transparent transition-all w-full sm:w-auto"
+                <a
+                  href="tel:9884344075"
+                  className="min-h-[44px] inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold text-[#16143E]/70 hover:text-[#16143E] border border-[#16143E]/12 hover:border-[#16143E]/25 bg-transparent transition-all w-full sm:w-auto"
                 >
-                  <Mail size={14} className="text-[#EF1313]" /> Open in Mail App
-                </button>
+                  <Phone size={13} className="text-[#EF1313]" /> Call 98843 44075
+                </a>
 
-                <button
-                  type="button"
-                  onClick={handleCopyEmail}
-                  title="Click to copy email address"
-                  className={`min-h-[44px] inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs transition-all duration-200 w-full sm:w-auto sm:ml-auto group cursor-pointer border ${
-                    copiedEmail
-                      ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-700 font-semibold shadow-sm"
-                      : "text-[#16143E]/55 hover:text-[#16143E] bg-[#16143E]/[0.03] hover:bg-[#16143E]/[0.08] border-[#16143E]/8 hover:border-[#16143E]/18"
-                  }`}
-                >
-                  {copiedEmail ? (
-                    <>
-                      <Check size={13} className="text-emerald-600" />
-                      <span>Copied to clipboard!</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>
-                        Direct: <strong className="text-[#16143E]/80 group-hover:text-[#16143E]">admin@broadnet.in</strong>
-                      </span>
-                      <Copy size={12} className="opacity-45 group-hover:opacity-100 transition-opacity ml-0.5 text-[#4E0DBA]" />
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* What Happens Next Timeline */}
-              <div className="mt-8 pt-6 border-t border-[#16143E]/10">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#16143E]/55 block mb-3 font-display">
-                  What happens after you submit:
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                  <div className="flex items-start gap-2.5 bg-[#16143E]/[0.02] p-3 rounded-xl border border-[#16143E]/6">
-                    <span className="w-5 h-5 rounded-full bg-[#EF1313]/10 text-[#EF1313] font-bold flex items-center justify-center flex-shrink-0 text-[10px]">
-                      1
-                    </span>
-                    <span className="text-[#16143E]/75 leading-snug">
-                      Unique reference ID logged immediately
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-2.5 bg-[#16143E]/[0.02] p-3 rounded-xl border border-[#16143E]/6">
-                    <span className="w-5 h-5 rounded-full bg-[#4E0DBA]/10 text-[#4E0DBA] font-bold flex items-center justify-center flex-shrink-0 text-[10px]">
-                      2
-                    </span>
-                    <span className="text-[#16143E]/75 leading-snug">
-                      Avadi technician verifies port & calls within 30–60 mins
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-2.5 bg-[#16143E]/[0.02] p-3 rounded-xl border border-[#16143E]/6">
-                    <span className="w-5 h-5 rounded-full bg-emerald-500/10 text-emerald-700 font-bold flex items-center justify-center flex-shrink-0 text-[10px]">
-                      3
-                    </span>
-                    <span className="text-[#16143E]/75 leading-snug">
-                      Doorstep setup or on-site survey scheduled at your convenience
-                    </span>
-                  </div>
+                <div className="w-full sm:w-auto sm:ml-auto flex items-center justify-center sm:justify-end gap-2 text-[11px] text-[#16143E]/60 pt-1 sm:pt-0">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>2-Hour Avadi Desk Response Guarantee</span>
                 </div>
               </div>
             </form>

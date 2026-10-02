@@ -179,6 +179,18 @@ h1, h2, h3, h4, h5, h6,
   padding-left: 48px !important;
 }
 .input-field::placeholder { color: rgba(22,20,62,0.4); }
+.input-field-compact {
+  padding-top: 9px !important;
+  padding-bottom: 9px !important;
+  min-height: 40px !important;
+  font-size: 0.875rem !important;
+  border-radius: 12px !important;
+}
+textarea.input-field-compact {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  min-height: 52px !important;
+}
 .input-field:focus {
   border-color: #4E0DBA;
   box-shadow: 0 0 0 4px rgba(78,13,186,0.1);

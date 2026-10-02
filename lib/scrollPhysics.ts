@@ -17,7 +17,19 @@ export function scrollToWithPhysics(
   const targetEl = document.getElementById(id);
   if (!targetEl) return;
 
-  const offset = options?.offset ?? 88; // 88px fixed header safe offset
+  // Calculate dynamic framing offset
+  let offset = options?.offset;
+  if (offset === undefined) {
+    if (id === "enquiry") {
+      const cardHeight = targetEl.offsetHeight || 440;
+      const vh = window.innerHeight;
+      // Vertically center the form card if it fits, with minimum 76px top buffer below fixed header
+      offset = Math.max(76, Math.round((vh - cardHeight) / 2));
+    } else {
+      offset = 88; // 88px fixed header safe offset
+    }
+  }
+
   const targetY = Math.max(0, targetEl.getBoundingClientRect().top + window.scrollY - offset);
   const startY = window.scrollY;
   const distance = targetY - startY;
@@ -29,8 +41,8 @@ export function scrollToWithPhysics(
   const lenis = (window as unknown as { lenis?: { scrollTo: (target: HTMLElement, opts: Record<string, unknown>) => void } }).lenis;
   if (lenis) {
     lenis.scrollTo(targetEl, {
-      offset: -(options?.offset ?? 88),
-      duration: 1.35,
+      offset: -offset,
+      duration: 1.25,
       onComplete: () => {
         triggerArrivalAnimation(targetEl, id);
         options?.onArrival?.();
