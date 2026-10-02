@@ -259,11 +259,14 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/35 text-center sm:text-left">
+          <p className="text-xs text-white/35 text-center sm:text-left">
             © {new Date().getFullYear()} Broadnet Internet Services. All rights reserved.
           </p>
-          <p className="text-sm font-semibold text-gradient text-center">
+          <p className="text-xs sm:text-sm font-semibold text-gradient text-center">
             A Safer, Smarter Tomorrow Starts Today
+          </p>
+          <p className="text-[11px] text-white/30 text-center sm:text-right tracking-wide">
+            Made with <span className="text-white/50 font-medium">Indian Pixel</span>
           </p>
         </div>
       </div>
