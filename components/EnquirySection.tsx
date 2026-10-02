@@ -298,10 +298,21 @@ export default function EnquirySection() {
     setErrors((prev) => ({ ...prev, [name]: err }));
   };
 
+  const triggerHaptic = (pattern: number | number[] = 18) => {
+    if (typeof window !== "undefined" && typeof navigator !== "undefined" && "vibrate" in navigator) {
+      try {
+        navigator.vibrate(pattern);
+      } catch {
+        // ignore
+      }
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateAll()) {
+      triggerHaptic([30, 40, 30]);
       // Focus on first invalid field
       const firstInvalidKey = ["name", "phone", "email", "location", "message"].find(
         (k) => errors[k as keyof FormErrors]
@@ -319,9 +330,13 @@ export default function EnquirySection() {
       return;
     }
 
+    // Gentle tactile haptic on submission click
+    triggerHaptic(20);
+
     setStatus("sending");
     setServerErrorMessage("");
     setPreviewUrl(null);
+    const startTime = Date.now();
 
     const payload = {
       name: form.name.trim(),
@@ -345,6 +360,15 @@ export default function EnquirySection() {
         throw new Error(data.error || "Submission failed. Please try again.");
       }
 
+      // Smooth motion design window: let the message takeoff animation complete naturally
+      const elapsed = Date.now() - startTime;
+      if (elapsed < 900) {
+        await new Promise((r) => setTimeout(r, 900 - elapsed));
+      }
+
+      // Triumphant delivery haptic confirmation
+      triggerHaptic([30, 60, 40]);
+
       lastSubmittedPayload.current = payloadHash;
       setSubmittedData({
         name: form.name.trim(),
@@ -362,6 +386,7 @@ export default function EnquirySection() {
       const errMsg = err instanceof Error ? err.message : "Failed to connect to the enquiry service.";
       setServerErrorMessage(errMsg);
       setStatus("error");
+      triggerHaptic([40, 50, 40]);
     }
   };
 
@@ -802,23 +827,78 @@ export default function EnquirySection() {
 
               {/* Submit & Secondary Options */}
               <div className="flex flex-col sm:flex-row items-center gap-3.5 flex-wrap">
-                <button
+                <motion.button
                   type="submit"
                   disabled={status === "sending"}
-                  className="btn-crimson min-h-[48px] w-full sm:w-auto justify-center disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-[#EF1313]/25"
+                  whileHover={{ scale: status === "sending" ? 1 : 1.02 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 450, damping: 24 }}
+                  className="relative overflow-hidden btn-crimson min-h-[50px] min-w-[210px] w-full sm:w-auto justify-center disabled:cursor-not-allowed shadow-xl shadow-[#EF1313]/30"
                 >
-                  {status === "sending" ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>Processing Enquiry...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send size={15} />
-                      <span>Send Enquiry</span>
-                    </>
+                  {/* Gentle transmitting light sweep across button */}
+                  {status === "sending" && (
+                    <motion.div
+                      initial={{ x: "-100%" }}
+                      animate={{ x: "200%" }}
+                      transition={{ repeat: Infinity, duration: 1.1, ease: "linear" }}
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"
+                    />
                   )}
-                </button>
+
+                  <AnimatePresence mode="wait">
+                    {status === "sending" ? (
+                      <motion.div
+                        key="sending-state"
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -6 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex items-center justify-center gap-2.5"
+                      >
+                        {/* Flying Message Motion Graphic */}
+                        <div className="relative w-5 h-5 flex items-center justify-center">
+                          {/* Signal transmission pulse rings */}
+                          <motion.span
+                            animate={{ scale: [0.8, 1.8], opacity: [0.8, 0] }}
+                            transition={{ repeat: Infinity, duration: 0.9, ease: "easeOut" }}
+                            className="absolute w-4 h-4 rounded-full border border-white/60"
+                          />
+                          <motion.div
+                            animate={{
+                              x: [0, 4, 18, -14, 0],
+                              y: [0, -3, -12, 4, 0],
+                              rotate: [0, 15, 28, -8, 0],
+                              scale: [1, 1.1, 0.9, 0.95, 1],
+                            }}
+                            transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
+                          >
+                            <Send size={15} className="text-white fill-white/25" />
+                          </motion.div>
+                        </div>
+                        <span className="font-bold text-xs sm:text-sm tracking-wide">
+                          Dispatching Message...
+                        </span>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="idle-state"
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -6 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex items-center justify-center gap-2 group-hover:gap-2.5 transition-all"
+                      >
+                        <motion.span
+                          whileHover={{ x: 2, y: -2 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                        >
+                          <Send size={15} />
+                        </motion.span>
+                        <span>Send Enquiry</span>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.button>
 
                 <a
                   href={whatsappHref}
