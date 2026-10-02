@@ -92,7 +92,7 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
               >
                 <Image
                   src="/assets/logo.png"
-                  alt="Broadnet"
+                  alt="Broadnet Internet & Security Services Logo"
                   width={200}
                   height={82}
                   className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
@@ -144,8 +144,9 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
             {/* Mobile burger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 rounded-xl text-[#16143E] hover:bg-[#16143E]/5"
-              aria-label="Toggle menu"
+              className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl text-[#16143E] hover:bg-[#16143E]/5 transition-colors"
+              aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobileOpen}
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -173,7 +174,7 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
                     href={link.href}
                     prefetch={true}
                     onClick={(e) => handleNavClick(e, link)}
-                    className={`px-4 py-3 rounded-2xl text-sm font-semibold transition-colors
+                    className={`min-h-[44px] flex items-center px-4 py-2.5 rounded-2xl text-sm font-semibold transition-colors
                       ${activePage === link.label
                         ? "bg-[#4E0DBA]/8 text-[#4E0DBA]"
                         : "text-[#16143E]/65 hover:bg-[#16143E]/5"
@@ -187,25 +188,25 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
                   <Link
                     href="/contact"
                     onClick={handleEnquiryClick}
-                    className="btn-crimson justify-center w-full shadow-lg shadow-[#EF1313]/25"
+                    className="btn-crimson min-h-[44px] justify-center w-full shadow-lg shadow-[#EF1313]/25"
                   >
                     Request Enquiry
                   </Link>
                   <div className="grid grid-cols-2 gap-2 mt-1">
                     <a
                       href="tel:+919884344075"
-                      className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-[#16143E]/15 text-xs font-semibold text-[#16143E] bg-[#16143E]/4 hover:bg-[#16143E]/8 transition-colors active:scale-98"
+                      className="min-h-[44px] flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-[#16143E]/15 text-xs font-semibold text-[#16143E] bg-[#16143E]/4 hover:bg-[#16143E]/8 transition-colors active:scale-98"
                     >
-                      <Phone size={13} className="text-[#4E0DBA]" />
+                      <Phone size={14} className="text-[#4E0DBA]" />
                       <span>Call Now</span>
                     </a>
                     <a
                       href="https://wa.me/919884344075?text=Hello%20Broadnet%2C%20I%20would%20like%20to%20enquire%20about%20your%20services."
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-[#25D366]/30 text-xs font-semibold text-[#16143E] bg-[#25D366]/8 hover:bg-[#25D366]/15 transition-colors active:scale-98"
+                      className="min-h-[44px] flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-[#25D366]/30 text-xs font-semibold text-[#16143E] bg-[#25D366]/8 hover:bg-[#25D366]/15 transition-colors active:scale-98"
                     >
-                      <MessageCircle size={13} className="text-[#25D366]" />
+                      <MessageCircle size={14} className="text-[#25D366]" />
                       <span>WhatsApp</span>
                     </a>
                   </div>

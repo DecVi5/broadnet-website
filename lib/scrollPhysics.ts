@@ -17,7 +17,7 @@ export function scrollToWithPhysics(
   const targetEl = document.getElementById(id);
   if (!targetEl) return;
 
-  const offset = options?.offset ?? 68; // 68px header offset
+  const offset = options?.offset ?? 88; // 88px fixed header safe offset
   const targetY = Math.max(0, targetEl.getBoundingClientRect().top + window.scrollY - offset);
   const startY = window.scrollY;
   const distance = targetY - startY;

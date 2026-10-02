@@ -5,6 +5,14 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { forwardRef, useRef, useMemo, useLayoutEffect, useEffect, useState } from 'react';
 import { Color, Mesh, ShaderMaterial } from 'three';
 
+if (typeof window !== "undefined") {
+  const originalWarn = console.warn;
+  console.warn = (...args) => {
+    if (typeof args[0] === "string" && args[0].includes("THREE.Clock")) return;
+    originalWarn.apply(console, args);
+  };
+}
+
 interface SilkProps {
   speed?: number;
   scale?: number;

@@ -8,7 +8,6 @@ import AdvantageSection from "@/components/AdvantageSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import EnquirySection from "@/components/EnquirySection";
 import Footer from "@/components/Footer";
-import CinematicIntro from "@/components/CinematicIntro";
 
 export const metadata: Metadata = {
   title: "Broadnet Internet Services | Fiber Broadband & CCTV Installation in Avadi, Chennai",
@@ -22,7 +21,6 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <CinematicIntro />
       <Header activePage="Home" />
       <main>
         <HeroSection />

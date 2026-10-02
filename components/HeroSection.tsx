@@ -16,38 +16,16 @@ const METRICS = [
 
 export default function HeroSection() {
   const [tick, setTick] = useState(0);
-  const [isRevealed, setIsRevealed] = useState(false);
 
   useEffect(() => {
     const id = setInterval(() => setTick((t) => (t + 1) % METRICS.length), 3000);
     return () => clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    // If intro has already completed in this session, reveal Hero immediately
-    if (typeof window !== "undefined" && sessionStorage.getItem("broadnet_intro_completed")) {
-      setIsRevealed(true);
-    }
-
-    const onReveal = () => setIsRevealed(true);
-
-    window.addEventListener("broadnet:intro-splitting", onReveal);
-    window.addEventListener("broadnet:intro-done", onReveal);
-
-    // Fallback so Hero is revealed after intro finishes or if skipped
-    const fallback = setTimeout(() => setIsRevealed(true), 3500);
-
-    return () => {
-      window.removeEventListener("broadnet:intro-splitting", onReveal);
-      window.removeEventListener("broadnet:intro-done", onReveal);
-      clearTimeout(fallback);
-    };
-  }, []);
-
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-20 pb-12 bg-white text-[#16143E]"
+      className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-20 pb-12 bg-white text-[#16143E] scroll-mt-24"
     >
       {/* Background — clean subtle grid */}
       <div className="absolute inset-0 pointer-events-none select-none">
@@ -95,13 +73,9 @@ export default function HeroSection() {
 
       {/* Centered Content Wrapper */}
       <motion.div
-        initial={{ opacity: 0.15, scale: 0.985, y: 10 }}
-        animate={
-          isRevealed
-            ? { opacity: 1, scale: 1, y: 0 }
-            : { opacity: 0.15, scale: 0.985, y: 10 }
-        }
-        transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center pointer-events-none w-full"
       >
         {/* Social Proof Trust Strip */}
@@ -111,7 +85,7 @@ export default function HeroSection() {
           transition={{ duration: 0.55 }}
           className="flex flex-wrap items-center justify-center gap-2 sm:gap-3.5 mb-4 sm:mb-5 pointer-events-auto max-w-full"
         >
-          <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-[#16143E]/4 border border-[#16143E]/10 backdrop-blur-sm shadow-sm flex-shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-full bg-[#16143E]/4 border border-[#16143E]/10 backdrop-blur-sm shadow-sm flex-shrink-0">
             <div className="flex items-center text-[#F59E0B]">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={11} className="fill-[#F59E0B]" />
@@ -121,7 +95,7 @@ export default function HeroSection() {
             <span className="text-[11px] sm:text-xs text-[#16143E]/50">Google Rating</span>
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold text-[#16143E]/70 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-[#16143E]/[0.02] border border-[#16143E]/6 sm:border-transparent">
+          <div className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold text-[#16143E]/70 px-2.5 sm:px-3 py-1.5 rounded-full bg-[#16143E]/[0.02] border border-[#16143E]/6 sm:border-transparent">
             <CheckCircle2 size={13} className="text-[#25D366] flex-shrink-0" />
             <span className="text-center">420+ Certified Deployments in Avadi</span>
           </div>
@@ -132,14 +106,14 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.05 }}
-          className="flex items-center justify-center mb-5 sm:mb-6 pointer-events-auto max-w-full px-2"
+          className="flex items-center justify-center mb-4 sm:mb-5 pointer-events-auto max-w-full px-2"
         >
           <div className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-[#4E0DBA]/18 bg-[#4E0DBA]/5 max-w-full">
             <span className="w-1.5 h-1.5 rounded-full bg-[#4E0DBA] animate-pulse flex-shrink-0" />
             <span
               className="text-[10px] sm:text-xs font-semibold text-[#4E0DBA] tracking-wide sm:tracking-widest uppercase font-display text-center leading-tight"
             >
-              Avadi · Chennai · Direct Fiber & ELV Partner
+              Avadi · Chennai · Fiber Internet & CCTV Security Partner
             </span>
           </div>
         </motion.div>
@@ -149,7 +123,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.12] sm:leading-[1.06] tracking-tight mb-4 sm:mb-6 text-[#16143E] max-w-4xl"
+          className="text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.12] sm:leading-[1.06] tracking-tight mb-4 sm:mb-5 text-[#16143E] max-w-4xl"
           style={{ fontFamily: "Syne, sans-serif" }}
         >
           Engineered{" "}
@@ -164,28 +138,49 @@ export default function HeroSection() {
           </span>
         </motion.h1>
 
-        {/* Sub */}
+        {/* Subtitle - Explicitly states offerings to local customers */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-[#16143E]/65 text-base sm:text-lg md:text-xl leading-relaxed mb-8 sm:mb-9 max-w-2xl mx-auto px-1 sm:px-0"
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="text-[#16143E]/75 text-base sm:text-lg md:text-xl leading-relaxed mb-5 max-w-2xl mx-auto px-1 sm:px-0 font-medium"
           style={{ fontFamily: "DM Sans, sans-serif" }}
         >
-          From high-speed fiber internet to enterprise CCTV and ELV systems — Broadnet delivers infrastructure-grade solutions with guaranteed uptime and 2-hour on-site dispatch.
+          Broadnet provides dedicated high-speed fiber internet, certified CCTV surveillance & ELV security, professional installation, and rapid on-site technician response across Avadi and Chennai.
         </motion.p>
+
+        {/* Quick Offering Badges */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.2 }}
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-8 sm:mb-9 pointer-events-auto"
+        >
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#4E0DBA]/8 text-[#4E0DBA] text-xs font-bold border border-[#4E0DBA]/15">
+            ⚡ High-Speed Fiber Internet
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EF1313]/8 text-[#EF1313] text-xs font-bold border border-[#EF1313]/15">
+            📹 Certified CCTV & Security
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#16143E]/6 text-[#16143E] text-xs font-bold border border-[#16143E]/12">
+            🔧 Professional Installation
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-600/10 text-emerald-700 text-xs font-bold border border-emerald-600/20">
+            📍 Local Avadi Support (&lt; 2 Hr SLA)
+          </span>
+        </motion.div>
 
         {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.25 }}
           className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-12 pointer-events-auto w-full max-w-xs sm:max-w-none"
         >
           <button
             type="button"
             onClick={() => scrollToWithPhysics("enquiry")}
-            className="btn-crimson justify-center shadow-xl shadow-[#EF1313]/30 hover:shadow-[#EF1313]/55 transition-all duration-300 ring-4 ring-[#EF1313]/15 hover:ring-[#EF1313]/35 group w-full sm:w-auto"
+            className="btn-crimson min-h-[48px] justify-center shadow-xl shadow-[#EF1313]/30 hover:shadow-[#EF1313]/55 transition-all duration-300 ring-4 ring-[#EF1313]/15 hover:ring-[#EF1313]/35 group w-full sm:w-auto"
           >
             Request Enquiry <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </button>
@@ -193,7 +188,7 @@ export default function HeroSection() {
             <button
               type="button"
               onClick={() => scrollToWithPhysics("security")}
-              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-3 rounded-full border border-[#16143E]/14 text-xs sm:text-sm font-semibold text-[#16143E]/75 hover:text-[#16143E] hover:border-[#16143E]/28 bg-white/80 backdrop-blur-sm transition-all duration-200"
+              className="flex-1 sm:flex-initial min-h-[48px] flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-3 rounded-full border border-[#16143E]/14 text-xs sm:text-sm font-semibold text-[#16143E]/75 hover:text-[#16143E] hover:border-[#16143E]/28 bg-white/80 backdrop-blur-sm transition-all duration-200"
               style={{ fontFamily: "Syne, sans-serif" }}
             >
               <Shield size={14} className="sm:w-[15px] sm:h-[15px]" /> Security Solutions
@@ -201,7 +196,7 @@ export default function HeroSection() {
             <button
               type="button"
               onClick={() => scrollToWithPhysics("internet")}
-              className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-3 rounded-full border border-[#16143E]/14 text-xs sm:text-sm font-semibold text-[#16143E]/75 hover:text-[#16143E] hover:border-[#16143E]/28 bg-white/80 backdrop-blur-sm transition-all duration-200"
+              className="flex-1 sm:flex-initial min-h-[48px] flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-3 rounded-full border border-[#16143E]/14 text-xs sm:text-sm font-semibold text-[#16143E]/75 hover:text-[#16143E] hover:border-[#16143E]/28 bg-white/80 backdrop-blur-sm transition-all duration-200"
               style={{ fontFamily: "Syne, sans-serif" }}
             >
               <Wifi size={14} className="sm:w-[15px] sm:h-[15px]" /> Internet Plans

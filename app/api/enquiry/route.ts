@@ -6,6 +6,7 @@ import path from "path";
 interface EnquiryPayload {
   name: string;
   phone: string;
+  email?: string;
   location?: string;
   enquiryType: string;
   requirements: string[];
@@ -68,6 +69,13 @@ function generateEmailHtml(data: EnquiryPayload): string {
                   <a href="tel:${data.phone}" style="color:${accentColor};font-weight:700;text-decoration:none;">${data.phone}</a>
                 </td>
               </tr>
+              ${data.email ? `
+              <tr>
+                <td style="padding:10px 0;border-bottom:1px solid #ECECF4;color:#6B6980;font-weight:600;">Email Address</td>
+                <td style="padding:10px 0;border-bottom:1px solid #ECECF4;">
+                  <a href="mailto:${data.email}" style="color:${accentColor};text-decoration:none;">${data.email}</a>
+                </td>
+              </tr>` : ""}
               <tr>
                 <td style="padding:10px 0;border-bottom:1px solid #ECECF4;color:#6B6980;font-weight:600;">Location / Area</td>
                 <td style="padding:10px 0;border-bottom:1px solid #ECECF4;color:#16143E;">${data.location || "<span style='color:#999;'>Not provided</span>"}</td>
@@ -141,7 +149,25 @@ function saveLocalBackup(data: EnquiryPayload) {
     });
     fs.writeFileSync(filePath, JSON.stringify(existing, null, 2), "utf-8");
   } catch (err) {
-    console.error("[BroadNet Local Backup Error]:", err);
+    // If running in read-only environment, fallback to tmp
+    try {
+      const tmpFile = path.join(process.env.TEMP || "/tmp", "broadnet_enquiries.json");
+      let existing: unknown[] = [];
+      if (fs.existsSync(tmpFile)) {
+        try {
+          existing = JSON.parse(fs.readFileSync(tmpFile, "utf-8"));
+        } catch {
+          existing = [];
+        }
+      }
+      existing.unshift({
+        ...data,
+        timestamp: new Date().toISOString(),
+      });
+      fs.writeFileSync(tmpFile, JSON.stringify(existing, null, 2), "utf-8");
+    } catch (tmpErr) {
+      console.error("[BroadNet Backup Error]:", err, tmpErr);
+    }
   }
 }
 
@@ -149,14 +175,49 @@ export async function POST(req: Request) {
   try {
     const body = (await req.json()) as EnquiryPayload;
 
-    if (!body.name?.trim() || !body.phone?.trim()) {
+    const trimmedName = body.name?.trim();
+    if (!trimmedName || trimmedName.length < 2 || trimmedName.length > 80) {
       return NextResponse.json(
-        { error: "Name and Phone Number are required fields." },
+        { error: "Please provide a valid full name between 2 and 80 characters." },
         { status: 400 }
       );
     }
 
-    // Save a persistent local copy
+    const cleanPhone = body.phone?.replace(/[\s\-\(\)]/g, "") || "";
+    // Match Indian phone numbers (10 digits starting with 6-9, or with +91/0 prefix)
+    const phoneValid = /^(?:\+?91|0)?[6-9]\d{9}$/.test(cleanPhone);
+    if (!phoneValid) {
+      return NextResponse.json(
+        { error: "Please provide a valid 10-digit Indian phone number (e.g. 9884344075)." },
+        { status: 400 }
+      );
+    }
+
+    if (body.email && body.email.trim()) {
+      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(body.email.trim());
+      if (!emailValid) {
+        return NextResponse.json(
+          { error: "Please provide a valid email address or leave the field blank." },
+          { status: 400 }
+        );
+      }
+    }
+
+    if (body.location && body.location.length > 120) {
+      return NextResponse.json(
+        { error: "Location must be within 120 characters." },
+        { status: 400 }
+      );
+    }
+
+    if (body.message && body.message.length > 1000) {
+      return NextResponse.json(
+        { error: "Requirement notes must be within 1000 characters." },
+        { status: 400 }
+      );
+    }
+
+    // Save persistent backup
     saveLocalBackup(body);
 
     const adminEmail = process.env.ADMIN_EMAIL || "admin@broadnet.in";

@@ -43,7 +43,7 @@ export default function InternetHero() {
             transition={{ duration: 0.6, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
             className="text-[#16143E]/60 text-base sm:text-lg md:text-xl leading-relaxed mb-6 sm:mb-8 max-w-2xl font-body"
           >
-            Broadnet operates its own optical fibre backbone across Avadi — delivering symmetric, uncontended internet to homes and enterprises with 99.9% uptime.
+            Broadnet operates its own optical fibre backbone across Avadi — delivering symmetric, dedicated high-speed internet to homes and enterprises with reliable fiber continuity.
           </motion.p>
 
           {/* Stats / Status */}

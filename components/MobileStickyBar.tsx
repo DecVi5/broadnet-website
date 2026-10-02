@@ -28,7 +28,7 @@ export default function MobileStickyBar() {
       <div className="max-w-md mx-auto grid grid-cols-3 gap-2">
         <a
           href="tel:+919884344075"
-          className="flex flex-col items-center justify-center py-2 px-1 rounded-xl bg-[#16143E]/5 hover:bg-[#16143E]/10 border border-[#16143E]/10 text-[#16143E] active:scale-95 transition-all text-center"
+          className="flex flex-col items-center justify-center min-h-[44px] py-2 px-1 rounded-xl bg-[#16143E]/5 hover:bg-[#16143E]/10 border border-[#16143E]/10 text-[#16143E] active:scale-95 transition-all text-center"
         >
           <Phone size={16} className="text-[#4E0DBA] mb-0.5" />
           <span className="text-[11px] font-bold font-display">Call</span>
@@ -38,7 +38,7 @@ export default function MobileStickyBar() {
           href="https://wa.me/919884344075?text=Hello%20Broadnet%2C%20I%20would%20like%20to%20enquire%20about%20your%20services."
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center py-2 px-1 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 text-[#16143E] active:scale-95 transition-all text-center"
+          className="flex flex-col items-center justify-center min-h-[44px] py-2 px-1 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 text-[#16143E] active:scale-95 transition-all text-center"
         >
           <MessageCircle size={16} className="text-[#25D366] mb-0.5" />
           <span className="text-[11px] font-bold font-display">WhatsApp</span>
@@ -53,7 +53,7 @@ export default function MobileStickyBar() {
               window.location.href = "/contact#enquiry";
             }
           }}
-          className="flex flex-col items-center justify-center py-2 px-1 rounded-xl bg-[#EF1313] hover:bg-[#d81010] text-white shadow-md shadow-[#EF1313]/30 active:scale-95 transition-all text-center"
+          className="flex flex-col items-center justify-center min-h-[44px] py-2 px-1 rounded-xl bg-[#EF1313] hover:bg-[#d81010] text-white shadow-md shadow-[#EF1313]/30 active:scale-95 transition-all text-center"
         >
           <Send size={15} className="text-white mb-0.5" />
           <span className="text-[11px] font-bold font-display">Enquiry</span>

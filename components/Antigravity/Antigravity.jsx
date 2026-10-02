@@ -5,6 +5,14 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useMemo, useRef, useEffect } from "react";
 import * as THREE from "three";
 
+if (typeof window !== "undefined") {
+  const originalWarn = console.warn;
+  console.warn = (...args) => {
+    if (typeof args[0] === "string" && args[0].includes("THREE.Clock")) return;
+    originalWarn.apply(console, args);
+  };
+}
+
 const AntigravityInner = ({
   count = 300,
   magnetRadius = 10,

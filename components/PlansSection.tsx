@@ -296,7 +296,7 @@ export default function PlansSection() {
               <button
                 type="button"
                 onClick={() => setActiveCatalogTab("broadnet")}
-                className={`flex-1 sm:flex-initial px-6 py-2.5 rounded-xl sm:rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center ${
+                className={`flex-1 sm:flex-initial min-h-[44px] px-6 py-2.5 rounded-xl sm:rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center ${
                   activeCatalogTab === "broadnet"
                     ? "bg-[#EF1313] text-white shadow-lg shadow-[#EF1313]/30"
                     : "text-white/60 hover:text-white"
@@ -307,7 +307,7 @@ export default function PlansSection() {
               <button
                 type="button"
                 onClick={() => setActiveCatalogTab("railwire")}
-                className={`flex-1 sm:flex-initial px-6 py-2.5 rounded-xl sm:rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center ${
+                className={`flex-1 sm:flex-initial min-h-[44px] px-6 py-2.5 rounded-xl sm:rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center ${
                   activeCatalogTab === "railwire"
                     ? "bg-[#4E0DBA] text-white shadow-lg shadow-[#4E0DBA]/40"
                     : "text-white/60 hover:text-white"
@@ -322,7 +322,7 @@ export default function PlansSection() {
               <button
                 type="button"
                 onClick={() => setBillingCycle("monthly")}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                className={`min-h-[44px] px-5 py-2.5 rounded-full text-xs font-semibold transition-all flex items-center justify-center ${
                   billingCycle === "monthly" ? "bg-white/15 text-white" : "text-white/50 hover:text-white"
                 }`}
               >
@@ -331,7 +331,7 @@ export default function PlansSection() {
               <button
                 type="button"
                 onClick={() => setBillingCycle("annual")}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                className={`min-h-[44px] px-5 py-2.5 rounded-full text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
                   billingCycle === "annual" ? "bg-emerald-600 text-white" : "text-white/50 hover:text-white"
                 }`}
               >
@@ -454,7 +454,7 @@ export default function PlansSection() {
                           window.location.href = "/#coverage";
                         }
                       }}
-                      className={`w-full py-3 px-3 rounded-xl font-bold text-xs tracking-wider uppercase flex items-center justify-center gap-1.5 transition-all duration-200 ${
+                      className={`w-full min-h-[44px] py-3 px-3 rounded-xl font-bold text-xs tracking-wider uppercase flex items-center justify-center gap-1.5 transition-all duration-200 ${
                         plan.btnPrimaryVariant === "red"
                           ? "bg-[#EF1313] hover:bg-[#d00e0e] text-white shadow-md shadow-[#EF1313]/30"
                           : "bg-[#1E1B38] hover:bg-[#27234A] text-white border border-white/10"
@@ -468,7 +468,7 @@ export default function PlansSection() {
                       href={waHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full py-2.5 px-3 rounded-xl font-bold text-xs text-white flex items-center justify-center gap-2 bg-[#22c55e] hover:bg-[#16a34a] shadow-sm transition-all"
+                      className="w-full min-h-[44px] py-2.5 px-3 rounded-xl font-bold text-xs text-white flex items-center justify-center gap-2 bg-[#22c55e] hover:bg-[#16a34a] shadow-sm transition-all"
                     >
                       <MessageCircle className="w-3.5 h-3.5 fill-white" />
                       <span>Order on WhatsApp</span>
@@ -513,7 +513,7 @@ export default function PlansSection() {
                 href="https://wa.me/919884344075?text=Hi%20Broadnet%2C%20I%20am%20interested%20in%20the%20Broadnet%20FTTH%20plan%20with%20Free%20Installation%20and%20Free%20ONT."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2.5 rounded-xl bg-[#EF1313] hover:bg-[#d00e0e] text-white text-xs font-bold whitespace-nowrap transition-all shadow-md shadow-[#EF1313]/30 active:scale-95 flex items-center gap-1.5"
+                className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#EF1313] hover:bg-[#d00e0e] text-white text-xs font-bold whitespace-nowrap transition-all shadow-md shadow-[#EF1313]/30 active:scale-95 flex items-center justify-center gap-1.5"
               >
                 <span>Claim Free Installation</span>
               </a>
@@ -549,7 +549,7 @@ export default function PlansSection() {
                 href="https://wa.me/919884344075?text=Hi%20Broadnet%2C%20I%20want%20to%20order%20the%20Railwire%20FTTH%20OTT%20bundle%20with%20Amazon%20Prime."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2.5 rounded-xl bg-[#4E0DBA] hover:bg-[#3d0999] text-white text-xs font-bold whitespace-nowrap transition-all shadow-md shadow-[#4E0DBA]/30 active:scale-95 flex items-center gap-1.5"
+                className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#4E0DBA] hover:bg-[#3d0999] text-white text-xs font-bold whitespace-nowrap transition-all shadow-md shadow-[#4E0DBA]/30 active:scale-95 flex items-center justify-center gap-1.5"
               >
                 <span>Order OTT Pack</span>
               </a>
@@ -603,7 +603,7 @@ export default function PlansSection() {
                 <div className="flex items-center gap-2 pt-3 border-t border-white/10">
                   <a
                     href={`/contact?service=${encodeURIComponent(item.enquiryService)}#enquiry`}
-                    className="flex-1 py-2.5 px-3 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold text-xs text-center transition-colors"
+                    className="flex-1 min-h-[44px] py-2.5 px-3 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center justify-center text-center transition-colors"
                   >
                     Enquire Now
                   </a>
@@ -611,7 +611,7 @@ export default function PlansSection() {
                     href={`https://wa.me/919884344075?text=${encodeURIComponent(item.waText)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 py-2.5 px-3 rounded-lg bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                    className="flex-1 min-h-[44px] py-2.5 px-3 rounded-lg bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <MessageCircle className="w-3.5 h-3.5 fill-white" />
                     <span>WhatsApp</span>

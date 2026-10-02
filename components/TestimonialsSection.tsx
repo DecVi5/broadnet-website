@@ -43,7 +43,7 @@ const REVIEWS: Testimonial[] = [
     rating: 5,
     date: "Client since 2021",
     quote:
-      "Our medical imaging diagnostics require continuous, symmetric cloud uploads with zero packet loss. BroadNet's dedicated fiber has run uninterrupted with 99.9% uptime for over 3 years. Their support team doesn't hide behind a bot; a real engineer answers.",
+      "Our medical imaging diagnostics require continuous, symmetric cloud uploads with zero packet loss. BroadNet's dedicated fiber has run uninterrupted with exceptional consistency for over 3 years. Their support team doesn't hide behind a bot; a real engineer answers.",
     verified: true,
     avatarBg: "bg-[#4E0DBA]",
     initials: "AM",

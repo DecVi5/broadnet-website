@@ -191,16 +191,17 @@ export default function LocationChecker() {
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white text-xs px-2 py-1 rounded bg-white/10"
+                aria-label="Clear search query"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 hover:text-white text-xs px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 min-h-[36px] flex items-center"
               >
                 Clear
               </button>
             )}
           </div>
 
-          {/* Quick Zone Filter Chips */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-            <span className="text-xs text-white/40 font-bold uppercase tracking-wider whitespace-nowrap mr-1">
+          {/* Quick Zone Filter Chips (Wrapping responsive layout with 44px touch targets) */}
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            <span className="text-xs text-white/50 font-bold uppercase tracking-wider whitespace-nowrap mr-1">
               Filter:
             </span>
             {ZONE_FILTERS.map((zone) => (
@@ -208,10 +209,10 @@ export default function LocationChecker() {
                 key={zone}
                 type="button"
                 onClick={() => setSelectedZone(zone)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 border ${
+                className={`min-h-[44px] px-4 py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 border flex items-center justify-center ${
                   selectedZone === zone
                     ? "bg-[#4E0DBA] border-[#4E0DBA] text-white shadow-md shadow-[#4E0DBA]/40"
-                    : "bg-white/5 border-white/10 text-white/60 hover:text-white hover:border-white/20"
+                    : "bg-white/5 border-white/10 text-white/70 hover:text-white hover:border-white/25"
                 }`}
               >
                 {zone}
@@ -256,7 +257,7 @@ export default function LocationChecker() {
                       <button
                         type="button"
                         onClick={() => handleBookLocation(activeResult.name)}
-                        className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-[#EF1313] hover:bg-[#d00e0e] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-[#EF1313]/30 transition-all active:scale-95"
+                        className="flex-1 sm:flex-initial min-h-[44px] px-5 py-2.5 rounded-xl bg-[#EF1313] hover:bg-[#d00e0e] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-[#EF1313]/30 transition-all active:scale-95"
                       >
                         <Send size={13} />
                         <span>Book Connection</span>
@@ -268,7 +269,7 @@ export default function LocationChecker() {
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-4 py-2.5 rounded-xl bg-[#22c55e] hover:bg-[#16a34a] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all"
+                        className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#22c55e] hover:bg-[#16a34a] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all"
                       >
                         <MessageCircle size={14} className="fill-white" />
                         <span>WhatsApp</span>
@@ -331,7 +332,7 @@ export default function LocationChecker() {
                       key={loc.name}
                       type="button"
                       onClick={() => handleSelectLocation(loc)}
-                      className={`w-full px-3 py-2.5 rounded-xl border text-left transition-all duration-200 flex items-center justify-between gap-2 group ${
+                      className={`w-full min-h-[44px] px-3 py-2.5 rounded-xl border text-left transition-all duration-200 flex items-center justify-between gap-2 group ${
                         isSelected
                           ? "bg-[#4E0DBA]/30 border-[#00C2FF] shadow-md shadow-[#00C2FF]/10 ring-1 ring-[#00C2FF]/60"
                           : "bg-[#141038]/70 border-white/8 hover:border-white/20 hover:bg-[#1B1647]"
@@ -410,7 +411,7 @@ export default function LocationChecker() {
                 Zero Third-Party Reseller Mesh
               </h5>
               <p className="text-white/50 text-xs leading-relaxed">
-                Direct optical connections from our private headend ring. Guaranteed bandwidth without evening congestion.
+                Direct optical connections from our private headend ring. Dedicated symmetric bandwidth engineered to prevent evening congestion.
               </p>
             </div>
           </div>

@@ -9,8 +9,15 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+html {
+  scroll-padding-top: 5.5rem;
+}
 html[data-scroll-behavior="smooth"] {
   scroll-behavior: smooth;
+}
+
+section[id], [id] {
+  scroll-margin-top: 5.5rem;
 }
 
 body {

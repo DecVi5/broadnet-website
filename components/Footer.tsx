@@ -50,7 +50,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Image
               src="/assets/logo.png"
-              alt="Broadnet"
+              alt="Broadnet Internet & Security Services Logo"
               width={200}
               height={82}
               className="h-12 w-auto object-contain mb-4 brightness-0 invert"
@@ -60,7 +60,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"/>
-              <span className="text-xs text-white/50 font-medium">Network Operational · 99.9% Uptime</span>
+              <span className="text-xs text-white/50 font-medium">Network Operational · Active Fiber Ring</span>
             </div>
             {/* Official Partner of CP PLUS */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/10 shadow-sm">
@@ -72,12 +72,12 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-widest text-[#4E0DBA] mb-5">Navigation</h3>
-            <ul className="space-y-2.5">
+            <ul className="space-y-1">
               {QUICK_LINKS.map((l) => (
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors group"
+                    className="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm transition-colors group py-1.5"
                   >
                     <ArrowUpRight size={13} className="opacity-0 group-hover:opacity-100 transition-opacity text-[#4E0DBA]" />
                     {l.label}
@@ -90,13 +90,13 @@ export default function Footer() {
           {/* Services — Linked to Contact / Enquiry */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-widest text-[#4E0DBA] mb-5">Services</h3>
-            <ul className="space-y-2.5">
+            <ul className="space-y-1">
               {SERVICES.map((s) => (
                 <li key={s}>
                   <Link
                     href={`/contact?service=${encodeURIComponent(s)}`}
                     onClick={(e) => handleServiceClick(e, s)}
-                    className="text-sm text-white/60 hover:text-white flex items-center gap-2 transition-all duration-200 group cursor-pointer"
+                    className="text-sm text-white/60 hover:text-white inline-flex items-center gap-2 transition-all duration-200 group cursor-pointer py-1.5"
                     title={`Enquire about ${s}`}
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-[#EF1313] group-hover:scale-125 transition-transform" />
@@ -122,7 +122,7 @@ export default function Footer() {
                       href="https://www.google.com/maps/dir/?api=1&destination=1093,+Fire+Station+Road,+TNHB,+Avadi,+Chennai,+Tamil+Nadu+600054"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] hover:bg-[#4E0DBA]/25 border border-white/10 hover:border-[#4E0DBA]/50 text-xs font-semibold text-[#00C2FF] hover:text-white transition-all duration-200 w-fit group"
+                      className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-lg bg-white/[0.06] hover:bg-[#4E0DBA]/25 border border-white/10 hover:border-[#4E0DBA]/50 text-xs font-semibold text-[#00C2FF] hover:text-white min-h-[44px] transition-all duration-200 w-fit group"
                       title="Open office directions in Google Maps"
                     >
                       <Navigation size={12} className="text-[#00C2FF] group-hover:rotate-45 transition-transform" />
@@ -132,19 +132,19 @@ export default function Footer() {
                   </div>
                 </li>
                 <li className="flex gap-3">
-                  <Phone size={15} className="text-[#4E0DBA] mt-0.5 flex-shrink-0" />
-                  <div className="flex flex-col gap-1">
-                    <a href="tel:+919884344075" className="text-sm text-white/60 hover:text-white transition-colors">
+                  <Phone size={15} className="text-[#4E0DBA] mt-1 flex-shrink-0" />
+                  <div className="flex flex-col gap-0.5">
+                    <a href="tel:+919884344075" className="text-sm text-white/60 hover:text-white transition-colors py-1 inline-block">
                       98843 44075
                     </a>
-                    <a href="tel:+918681888111" className="text-sm text-white/60 hover:text-white transition-colors">
+                    <a href="tel:+918681888111" className="text-sm text-white/60 hover:text-white transition-colors py-1 inline-block">
                       86818 88111
                     </a>
                   </div>
                 </li>
                 <li className="flex gap-3">
-                  <Mail size={15} className="text-[#4E0DBA] mt-0.5 flex-shrink-0" />
-                  <a href="mailto:admin@broadnet.in" className="text-sm text-white/60 hover:text-white transition-colors">
+                  <Mail size={15} className="text-[#4E0DBA] mt-1 flex-shrink-0" />
+                  <a href="mailto:admin@broadnet.in" className="text-sm text-white/60 hover:text-white transition-colors py-1 inline-block">
                     admin@broadnet.in
                   </a>
                 </li>
@@ -173,7 +173,7 @@ export default function Footer() {
               href="https://wa.me/919884344075?text=Hello%20Broadnet%2C%20I%20would%20like%20to%20enquire%20about%20your%20services."
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] hover:bg-[#25D366]/15 border border-white/10 hover:border-[#25D366]/40 text-xs font-semibold text-white/90 hover:text-white transition-all duration-200 group"
+              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] hover:bg-[#25D366]/15 border border-white/10 hover:border-[#25D366]/40 text-xs font-semibold text-white/90 hover:text-white min-h-[44px] transition-all duration-200 group"
             >
               <div className="flex items-center gap-2.5 truncate">
                 <span className="text-[#25D366] group-hover:scale-110 transition-transform flex-shrink-0">
@@ -192,7 +192,7 @@ export default function Footer() {
               href="https://www.instagram.com/broadnet_tech/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] hover:bg-[#E4405F]/15 border border-white/10 hover:border-[#E4405F]/40 text-xs font-semibold text-white/90 hover:text-white transition-all duration-200 group"
+              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] hover:bg-[#E4405F]/15 border border-white/10 hover:border-[#E4405F]/40 text-xs font-semibold text-white/90 hover:text-white min-h-[44px] transition-all duration-200 group"
             >
               <div className="flex items-center gap-2.5 truncate">
                 <span className="text-[#E4405F] group-hover:scale-110 transition-transform flex-shrink-0">
@@ -211,7 +211,7 @@ export default function Footer() {
               href="https://www.linkedin.com/in/janardhanaml/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] hover:bg-[#0A66C2]/15 border border-white/10 hover:border-[#0A66C2]/40 text-xs font-semibold text-white/90 hover:text-white transition-all duration-200 group"
+              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] hover:bg-[#0A66C2]/15 border border-white/10 hover:border-[#0A66C2]/40 text-xs font-semibold text-white/90 hover:text-white min-h-[44px] transition-all duration-200 group"
             >
               <div className="flex items-center gap-2.5 truncate">
                 <span className="text-[#0A66C2] group-hover:scale-110 transition-transform flex-shrink-0">
@@ -228,7 +228,7 @@ export default function Footer() {
             {/* 4. Phone */}
             <a
               href="tel:+919884344075"
-              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] hover:bg-[#4E0DBA]/25 border border-white/10 hover:border-[#4E0DBA]/50 text-xs font-semibold text-white/90 hover:text-white transition-all duration-200 group"
+              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] hover:bg-[#4E0DBA]/25 border border-white/10 hover:border-[#4E0DBA]/50 text-xs font-semibold text-white/90 hover:text-white min-h-[44px] transition-all duration-200 group"
             >
               <div className="flex items-center gap-2.5 truncate">
                 <Phone size={14} className="text-[#4E0DBA] group-hover:scale-110 transition-transform flex-shrink-0" />
@@ -243,7 +243,7 @@ export default function Footer() {
             {/* 5. Mail */}
             <a
               href="mailto:admin@broadnet.in"
-              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] hover:bg-[#EF1313]/15 border border-white/10 hover:border-[#EF1313]/40 text-xs font-semibold text-white/90 hover:text-white transition-all duration-200 group"
+              className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] hover:bg-[#EF1313]/15 border border-white/10 hover:border-[#EF1313]/40 text-xs font-semibold text-white/90 hover:text-white min-h-[44px] transition-all duration-200 group"
             >
               <div className="flex items-center gap-2.5 truncate">
                 <Mail size={14} className="text-[#EF1313] group-hover:scale-110 transition-transform flex-shrink-0" />

@@ -52,7 +52,7 @@ export default function AdvantageSection() {
             <span className="text-gradient">Advantage</span>
           </h2>
           <p className="text-white/65 max-w-xl mx-auto text-lg leading-relaxed">
-            An 8-step engineered approach that guarantees zero-compromise delivery from conception to commissioning.
+            An 8-step engineered approach delivering precision execution from conception to commissioning.
           </p>
         </motion.div>
 
