@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import fs from "fs";
-import path from "path";
 
 interface EnquiryPayload {
   name: string;
@@ -18,14 +16,15 @@ function generateEmailHtml(data: EnquiryPayload): string {
   const accentColor = isSecurity ? "#EF1313" : "#4E0DBA";
   const badgeBg = isSecurity ? "#FFF0F0" : "#F4F0FD";
 
-  const reqBadges = (data.requirements && data.requirements.length > 0)
-    ? data.requirements
-        .map(
-          (r) =>
-            `<span style="display:inline-block;padding:4px 10px;margin:2px 4px 2px 0;background:${badgeBg};color:${accentColor};border:1px solid ${accentColor}33;border-radius:999px;font-size:12px;font-weight:600;">${r}</span>`
-        )
-        .join("")
-    : "<span style='color:#888;font-style:italic;'>None specified</span>";
+  const reqBadges =
+    data.requirements && data.requirements.length > 0
+      ? data.requirements
+          .map(
+            (r) =>
+              `<span style="display:inline-block;padding:4px 10px;margin:2px 4px 2px 0;background:${badgeBg};color:${accentColor};border:1px solid ${accentColor}33;border-radius:999px;font-size:12px;font-weight:600;">${r}</span>`
+          )
+          .join("")
+      : "<span style='color:#888;font-style:italic;'>None specified</span>";
 
   return `
   <!DOCTYPE html>
@@ -69,13 +68,17 @@ function generateEmailHtml(data: EnquiryPayload): string {
                   <a href="tel:${data.phone}" style="color:${accentColor};font-weight:700;text-decoration:none;">${data.phone}</a>
                 </td>
               </tr>
-              ${data.email ? `
+              ${
+                data.email
+                  ? `
               <tr>
                 <td style="padding:10px 0;border-bottom:1px solid #ECECF4;color:#6B6980;font-weight:600;">Email Address</td>
                 <td style="padding:10px 0;border-bottom:1px solid #ECECF4;">
                   <a href="mailto:${data.email}" style="color:${accentColor};text-decoration:none;">${data.email}</a>
                 </td>
-              </tr>` : ""}
+              </tr>`
+                  : ""
+              }
               <tr>
                 <td style="padding:10px 0;border-bottom:1px solid #ECECF4;color:#6B6980;font-weight:600;">Location / Area</td>
                 <td style="padding:10px 0;border-bottom:1px solid #ECECF4;color:#16143E;">${data.location || "<span style='color:#999;'>Not provided</span>"}</td>
@@ -118,7 +121,7 @@ function generateEmailHtml(data: EnquiryPayload): string {
         <tr>
           <td style="background:#F2F2FA;padding:18px 32px;text-align:center;font-size:12px;color:#8E8CA0;border-top:1px solid #ECECF4;">
             This email was automatically dispatched by the BroadNet Online Enquiry Engine.<br/>
-            Target destination: <strong style="color:#16143E;">admin@broadnet.in</strong>
+            Delivered to: <strong style="color:#16143E;">admin@broadnet.in</strong>
           </td>
         </tr>
       </table>
@@ -127,54 +130,11 @@ function generateEmailHtml(data: EnquiryPayload): string {
   `;
 }
 
-function saveLocalBackup(data: EnquiryPayload) {
-  try {
-    const dir = path.join(process.cwd(), "data");
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    const filePath = path.join(dir, "enquiries.json");
-    let existing: unknown[] = [];
-    if (fs.existsSync(filePath)) {
-      const content = fs.readFileSync(filePath, "utf-8");
-      try {
-        existing = JSON.parse(content);
-      } catch {
-        existing = [];
-      }
-    }
-    existing.unshift({
-      ...data,
-      timestamp: new Date().toISOString(),
-    });
-    fs.writeFileSync(filePath, JSON.stringify(existing, null, 2), "utf-8");
-  } catch (err) {
-    // If running in read-only environment, fallback to tmp
-    try {
-      const tmpFile = path.join(process.env.TEMP || "/tmp", "broadnet_enquiries.json");
-      let existing: unknown[] = [];
-      if (fs.existsSync(tmpFile)) {
-        try {
-          existing = JSON.parse(fs.readFileSync(tmpFile, "utf-8"));
-        } catch {
-          existing = [];
-        }
-      }
-      existing.unshift({
-        ...data,
-        timestamp: new Date().toISOString(),
-      });
-      fs.writeFileSync(tmpFile, JSON.stringify(existing, null, 2), "utf-8");
-    } catch (tmpErr) {
-      console.error("[BroadNet Backup Error]:", err, tmpErr);
-    }
-  }
-}
-
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as EnquiryPayload;
 
+    // ── Validation ──────────────────────────────────────────────────────────
     const trimmedName = body.name?.trim();
     if (!trimmedName || trimmedName.length < 2 || trimmedName.length > 80) {
       return NextResponse.json(
@@ -184,7 +144,6 @@ export async function POST(req: Request) {
     }
 
     const cleanPhone = body.phone?.replace(/[\s\-\(\)]/g, "") || "";
-    // Match Indian phone numbers (10 digits starting with 6-9, or with +91/0 prefix)
     const phoneValid = /^(?:\+?91|0)?[6-9]\d{9}$/.test(cleanPhone);
     if (!phoneValid) {
       return NextResponse.json(
@@ -217,9 +176,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // Save persistent backup
-    saveLocalBackup(body);
-
+    // ── Send Email via SMTP ──────────────────────────────────────────────────
     const adminEmail = process.env.ADMIN_EMAIL || "admin@broadnet.in";
     const smtpHost = process.env.SMTP_HOST;
     const smtpUser = process.env.SMTP_USER;
@@ -227,79 +184,34 @@ export async function POST(req: Request) {
     const smtpPort = parseInt(process.env.SMTP_PORT || "465", 10);
     const smtpSecure = process.env.SMTP_SECURE !== "false";
 
-    // 1. If SMTP credentials exist in .env.local, send real email directly to admin@broadnet.in
-    if (smtpHost && smtpUser && smtpPass) {
-      const transporter = nodemailer.createTransport({
-        host: smtpHost,
-        port: smtpPort,
-        secure: smtpSecure,
-        auth: {
-          user: smtpUser,
-          pass: smtpPass,
-        },
-      });
-
-      const info = await transporter.sendMail({
-        from: `"BroadNet Enquiries" <${smtpUser}>`,
-        to: adminEmail,
-        replyTo: adminEmail,
-        subject: `[BroadNet Lead] ${body.enquiryType}: ${body.name} (${body.phone})`,
-        text: `New Enquiry Received:\n\nName: ${body.name}\nPhone: ${body.phone}\nLocation: ${body.location || "N/A"}\nType: ${body.enquiryType}\nRequirements: ${body.requirements?.join(", ") || "None"}\nNotes: ${body.message || "None"}`,
-        html: generateEmailHtml(body),
-      });
-
-      console.log(`[BroadNet SMTP] Sent email directly to ${adminEmail}, MessageId: ${info.messageId}`);
+    if (!smtpHost || !smtpUser || !smtpPass) {
+      // SMTP not configured — return success so UX isn't broken, but flag it
       return NextResponse.json({
         success: true,
-        message: "Enquiry delivered to admin@broadnet.in directly via SMTP.",
-        mode: "production",
+        message: "Enquiry received. Configure SMTP environment variables to enable email delivery.",
+        mode: "no_smtp",
       });
     }
 
-    // 2. Default Localhost Testing: Automatic Ethereal test inbox over the internet
-    console.log("[BroadNet Localhost] No custom SMTP credentials detected in .env.local. Creating test mailbox...");
-    try {
-      const testAccount = await nodemailer.createTestAccount();
-      const testTransporter = nodemailer.createTransport({
-        host: testAccount.smtp.host,
-        port: testAccount.smtp.port,
-        secure: testAccount.smtp.secure,
-        auth: {
-          user: testAccount.user,
-          pass: testAccount.pass,
-        },
-      });
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      secure: smtpSecure,
+      auth: { user: smtpUser, pass: smtpPass },
+    });
 
-      const info = await testTransporter.sendMail({
-        from: `"BroadNet Web" <no-reply@broadnet.in>`,
-        to: adminEmail,
-        subject: `[Test Submission] ${body.enquiryType}: ${body.name} (${body.phone})`,
-        text: `New Enquiry Received:\n\nName: ${body.name}\nPhone: ${body.phone}\nLocation: ${body.location || "N/A"}\nType: ${body.enquiryType}\nRequirements: ${body.requirements?.join(", ") || "None"}\nNotes: ${body.message || "None"}`,
-        html: generateEmailHtml(body),
-      });
+    await transporter.sendMail({
+      from: `"BroadNet Enquiries" <${smtpUser}>`,
+      to: adminEmail,
+      replyTo: adminEmail,
+      subject: `[BroadNet Lead] ${body.enquiryType}: ${body.name} (${body.phone})`,
+      text: `New Enquiry\n\nName: ${body.name}\nPhone: ${body.phone}\nLocation: ${body.location || "N/A"}\nType: ${body.enquiryType}\nRequirements: ${body.requirements?.join(", ") || "None"}\nNotes: ${body.message || "None"}`,
+      html: generateEmailHtml(body),
+    });
 
-      const previewUrl = nodemailer.getTestMessageUrl(info);
-      console.log(`[BroadNet Localhost] ✅ Message sent to test account!`);
-      console.log(`[BroadNet Localhost] 📬 Preview URL: ${previewUrl}`);
-
-      return NextResponse.json({
-        success: true,
-        message: "Enquiry successfully processed and dispatched.",
-        mode: "test",
-        previewUrl: previewUrl || undefined,
-        note: "Processed in test mode. Set SMTP credentials in .env.local to send directly to real mailboxes.",
-      });
-    } catch (testErr) {
-      console.warn("[BroadNet Test Dispatch Warning]:", testErr);
-      // Fallback: If network to Ethereal is unavailable, local backup succeeded
-      return NextResponse.json({
-        success: true,
-        message: "Enquiry saved locally to data/enquiries.json.",
-        mode: "local_backup",
-      });
-    }
+    return NextResponse.json({ success: true, message: "Enquiry submitted successfully.", mode: "production" });
   } catch (error) {
-    console.error("[BroadNet API Enquiry Error]:", error);
+    console.error("[BroadNet Enquiry Error]:", error);
     return NextResponse.json(
       { error: "Failed to process enquiry. Please try again." },
       { status: 500 }

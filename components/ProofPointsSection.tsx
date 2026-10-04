@@ -60,7 +60,16 @@ export default function ProofPointsSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: index * 0.08, duration: 0.5 }}
-                className="p-6 rounded-2xl border border-[#16143E]/10 bg-[#16143E]/[0.015] hover:bg-white hover:border-[#4E0DBA]/30 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+                whileHover={{
+                  y: -10,
+                  scale: 1.04,
+                  boxShadow: "0 24px 48px rgba(78,13,186,0.14)",
+                  borderColor: "rgba(78,13,186,0.35)",
+                  backgroundColor: "#ffffff",
+                  transition: { duration: 0.22 },
+                }}
+                whileTap={{ scale: 0.97 }}
+                className="p-6 rounded-2xl border border-[#16143E]/10 bg-[#16143E]/[0.015] transition-colors duration-300 flex flex-col justify-between cursor-default"
               >
                 <div>
                   <div className="w-11 h-11 rounded-xl bg-[#4E0DBA]/8 border border-[#4E0DBA]/15 flex items-center justify-center text-[#4E0DBA] mb-4">

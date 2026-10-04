@@ -38,7 +38,14 @@ export default function ServiceChoiceSection() {
             initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="rounded-3xl bg-white p-7 sm:p-9 border border-[#16143E]/10 shadow-lg shadow-[#16143E]/5 flex flex-col justify-between hover:border-[#4E0DBA]/40 transition-all duration-300 relative group"
+            whileHover={{
+              y: -10,
+              scale: 1.02,
+              boxShadow: "0 28px 56px rgba(78,13,186,0.16)",
+              transition: { duration: 0.24 },
+            }}
+            whileTap={{ scale: 0.98 }}
+            className="rounded-3xl bg-white p-7 sm:p-9 border border-[#16143E]/10 shadow-lg shadow-[#16143E]/5 flex flex-col justify-between hover:border-[#4E0DBA]/40 transition-colors duration-300 relative group"
           >
             <div>
               <div className="flex items-center justify-between gap-3 mb-6">
@@ -104,7 +111,14 @@ export default function ServiceChoiceSection() {
             initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="rounded-3xl bg-white p-7 sm:p-9 border border-[#16143E]/10 shadow-lg shadow-[#16143E]/5 flex flex-col justify-between hover:border-[#EF1313]/40 transition-all duration-300 relative group"
+            whileHover={{
+              y: -10,
+              scale: 1.02,
+              boxShadow: "0 28px 56px rgba(239,19,19,0.13)",
+              transition: { duration: 0.24 },
+            }}
+            whileTap={{ scale: 0.98 }}
+            className="rounded-3xl bg-white p-7 sm:p-9 border border-[#16143E]/10 shadow-lg shadow-[#16143E]/5 flex flex-col justify-between hover:border-[#EF1313]/40 transition-colors duration-300 relative group"
           >
             <div>
               <div className="flex items-center justify-between gap-3 mb-6">

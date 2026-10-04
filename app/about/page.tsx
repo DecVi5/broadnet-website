@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EnquirySection from "@/components/EnquirySection";
+import CertificatesSection from "@/components/CertificatesSection";
 import { Users, Award, MapPin, Clock, TrendingUp, Heart, BadgeCheck } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -131,6 +132,7 @@ export default function AboutPage() {
           </div>
         </section>
 
+        <CertificatesSection />
         <EnquirySection />
       </main>
       <Footer />

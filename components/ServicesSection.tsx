@@ -208,7 +208,15 @@ export default function ServicesSection() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: index * 0.08, duration: 0.5 }}
-                className="bg-[#120F2E] border border-white/10 hover:border-[#EF1313]/40 rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:shadow-[#EF1313]/10 group"
+                whileHover={{
+                  y: -10,
+                  scale: 1.03,
+                  boxShadow: "0 28px 56px rgba(239,19,19,0.14)",
+                  borderColor: "rgba(239,19,19,0.45)",
+                  transition: { duration: 0.22 },
+                }}
+                whileTap={{ scale: 0.97 }}
+                className="bg-[#120F2E] border border-white/10 rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-colors duration-300 group cursor-default"
               >
                 <div>
                   {/* Top Badge & Price */}
